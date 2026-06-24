@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tutoría 5° Año — Ingreso al Mundo Laboral</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,900;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f0f4f8;
+    --bg2: #e2eaf2;
+    --ink: #0f1f2e;
+    --ink2: #4a6070;
+    --accent: #1a5fa8;
+    --accent2: #0e8c5e;
+    --accent3: #e8a030;
+    --soft: #ccdae8;
+    --white: #f8fafc;
+    --b1: #1a5fa8;
+    --b2: #0e7a5a;
+    --b3: #b84a1a;
+    --b4: #7040a8;
+    --b5: #1a7a9a;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--ink); min-height: 100vh; }
+
+  header { background: var(--ink); color: var(--white); position: relative; overflow: hidden; }
+  header::before { content: ''; position: absolute; top: -60px; right: -60px; width: 300px; height: 300px; border-radius: 50%; background: var(--accent); opacity: .18; }
+  header::after { content: ''; position: absolute; bottom: -40px; left: 10%; width: 200px; height: 200px; border-radius: 50%; background: var(--accent3); opacity: .1; }
+  .header-inner { max-width: 1100px; margin: 0 auto; padding: 48px 32px 40px; position: relative; z-index: 1; }
+  .header-tag { font-size: 11px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: var(--accent3); margin-bottom: 12px; }
+  header h1 { font-family: 'Fraunces', serif; font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 900; line-height: 1.05; margin-bottom: 12px; }
+  header h1 em { font-style: italic; font-weight: 300; color: var(--accent3); }
+  .header-sub { font-size: 15px; color: rgba(255,255,255,.6); font-weight: 300; margin-top: 8px; }
+
+  .alumno-bar { background: var(--white); border-bottom: 2px solid var(--soft); padding: 16px 32px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; max-width: 1100px; margin: 0 auto; }
+  .alumno-bar label { font-size: 13px; font-weight: 500; color: var(--ink2); white-space: nowrap; }
+  .alumno-bar input { border: 1.5px solid var(--soft); border-radius: 6px; padding: 8px 14px; font-family: 'DM Sans', sans-serif; font-size: 14px; background: var(--bg); color: var(--ink); flex: 1; min-width: 180px; transition: border .2s; }
+  .alumno-bar input:focus { outline: none; border-color: var(--accent); }
+  .btn-save { background: var(--accent2); color: white; border: none; border-radius: 6px; padding: 9px 20px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; transition: background .2s, transform .1s; white-space: nowrap; }
+  .btn-save:hover { background: #0a6b47; transform: translateY(-1px); }
+
+  .main { max-width: 1100px; margin: 0 auto; padding: 40px 32px 80px; display: grid; grid-template-columns: 260px 1fr; gap: 32px; align-items: start; }
+
+  .sidebar { position: sticky; top: 24px; }
+  .sidebar-title { font-size: 10px; font-weight: 500; letter-spacing: 2.5px; text-transform: uppercase; color: var(--ink2); margin-bottom: 16px; padding-left: 4px; }
+  .bloque-nav { background: var(--white); border-radius: 12px; overflow: hidden; border: 1.5px solid var(--soft); margin-bottom: 8px; }
+  .bloque-nav-header { padding: 12px 16px; font-size: 12px; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: background .15s; }
+  .bloque-nav-header:hover { background: var(--bg); }
+  .bloque-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .nav-clase { display: block; padding: 8px 16px 8px 34px; font-size: 12px; color: var(--ink2); cursor: pointer; transition: background .15s, color .15s; border-top: 1px solid var(--bg2); text-decoration: none; }
+  .nav-clase:hover { background: var(--bg); color: var(--ink); }
+  .nav-clase.active { background: var(--bg2); color: var(--ink); font-weight: 500; }
+  .nav-clase.completada::after { content: ' ✓'; color: var(--accent2); }
+
+  .content { min-width: 0; }
+  .clase-card { background: var(--white); border-radius: 16px; border: 1.5px solid var(--soft); margin-bottom: 24px; overflow: hidden; display: none; animation: fadeIn .3s ease; }
+  .clase-card.visible { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  .clase-header { padding: 28px 32px 20px; border-bottom: 1.5px solid var(--soft); display: flex; gap: 16px; align-items: flex-start; }
+  .clase-num { font-family: 'Fraunces', serif; font-size: 3rem; font-weight: 900; line-height: 1; opacity: .15; flex-shrink: 0; }
+  .clase-meta { flex: 1; }
+  .clase-bloque-tag { font-size: 10px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; padding: 3px 10px; border-radius: 20px; color: white; display: inline-block; margin-bottom: 8px; }
+  .clase-titulo { font-family: 'Fraunces', serif; font-size: 1.6rem; font-weight: 600; line-height: 1.2; margin-bottom: 6px; }
+  .clase-desc { font-size: 13px; color: var(--ink2); font-weight: 300; line-height: 1.5; }
+  .clase-producto { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; background: var(--bg2); border-radius: 20px; padding: 4px 12px; font-size: 11px; font-weight: 500; color: var(--ink2); }
+
+  .clase-body { padding: 28px 32px; }
+  .seccion { margin-bottom: 28px; }
+  .seccion-titulo { font-size: 10px; font-weight: 500; letter-spacing: 2.5px; text-transform: uppercase; color: var(--ink2); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .seccion-titulo::after { content: ''; flex: 1; height: 1px; background: var(--soft); }
+
+  /* Intro box — texto introductorio del tema */
+  .intro-tema {
+    background: linear-gradient(135deg, #eef4fb 0%, #f5f8fc 100%);
+    border: 1.5px solid #b8cfe8;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--ink);
+  }
+  .intro-tema h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--accent);
+  }
+  .intro-tema p { margin-bottom: 10px; }
+  .intro-tema p:last-child { margin-bottom: 0; }
+  .intro-tema ul { padding-left: 20px; margin-top: 6px; }
+  .intro-tema ul li { margin-bottom: 5px; }
+  .intro-tema strong { color: var(--ink); }
+
+  /* Caja de concepto clave */
+  .concepto-box {
+    background: #fffbf0;
+    border-left: 4px solid var(--accent3);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    margin: 12px 0;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #5a4500;
+  }
+  .concepto-box strong { display: block; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 4px; color: var(--accent3); }
+
+  .objetivos-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .objetivos-list li { font-size: 14px; padding-left: 20px; position: relative; color: var(--ink); line-height: 1.5; }
+  .objetivos-list li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-weight: 600; }
+
+  .actividad { background: var(--bg); border-radius: 12px; padding: 20px 24px; border: 1.5px dashed var(--soft); }
+  .info-box { background: #fff8e0; border: 1.5px solid #f0d070; border-radius: 10px; padding: 12px 16px; font-size: 13px; color: #7a5a00; line-height: 1.5; margin-bottom: 16px; }
+
+  textarea.campo { width: 100%; min-height: 100px; border: 1.5px solid var(--soft); border-radius: 8px; padding: 12px 16px; font-family: 'DM Sans', sans-serif; font-size: 14px; background: var(--white); color: var(--ink); resize: vertical; line-height: 1.6; transition: border .2s; margin-bottom: 10px; }
+  textarea.campo:focus { outline: none; border-color: var(--accent); }
+  .campo-label { font-size: 12px; font-weight: 500; color: var(--ink2); margin-bottom: 6px; display: block; }
+  input.campo-inline { width: 100%; border: 1.5px solid var(--soft); border-radius: 8px; padding: 10px 14px; font-family: 'DM Sans', sans-serif; font-size: 14px; background: var(--white); color: var(--ink); margin-bottom: 10px; transition: border .2s; }
+  input.campo-inline:focus { outline: none; border-color: var(--accent); }
+
+  .likert { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+  .likert-opt { flex: 1; min-width: 60px; text-align: center; padding: 10px 6px; border: 1.5px solid var(--soft); border-radius: 8px; cursor: pointer; font-size: 12px; transition: all .15s; background: var(--white); }
+  .likert-opt:hover { border-color: var(--accent); background: var(--bg); }
+  .likert-opt.selected { background: var(--accent); color: white; border-color: var(--accent); }
+
+  .checklist { display: flex; flex-direction: column; gap: 8px; }
+  .check-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 14px; background: var(--white); border-radius: 8px; border: 1.5px solid var(--soft); cursor: pointer; transition: border .15s, background .15s; }
+  .check-item:hover { border-color: var(--accent2); }
+  .check-item.checked { background: #edf7f3; border-color: var(--accent2); }
+  .check-item input[type=checkbox] { width: 16px; height: 16px; margin-top: 2px; accent-color: var(--accent2); flex-shrink: 0; }
+  .check-item span { font-size: 13px; line-height: 1.4; }
+
+  .tabla-comparativa { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 12px; }
+  .tabla-comparativa th { background: var(--ink); color: white; padding: 8px 12px; text-align: left; font-weight: 500; }
+  .tabla-comparativa td { padding: 6px 10px; border-bottom: 1px solid var(--soft); vertical-align: top; }
+  .tabla-comparativa td:first-child { font-weight: 500; color: var(--ink2); }
+  .tabla-comparativa textarea { width: 100%; min-height: 56px; border: 1px solid var(--soft); border-radius: 5px; padding: 6px 8px; font-family: 'DM Sans', sans-serif; font-size: 12px; background: var(--white); color: var(--ink); resize: vertical; transition: border .2s; }
+  .tabla-comparativa textarea:focus { outline: none; border-color: var(--accent); }
+
+  .caso-box { background: var(--white); border: 1.5px solid var(--soft); border-radius: 10px; padding: 16px; margin-bottom: 16px; font-size: 13px; line-height: 1.6; color: var(--ink2); }
+  .caso-box strong { color: var(--ink); }
+
+  .feedback-grid { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
+  .feedback-row { display: grid; grid-template-columns: 1fr 70px 70px 80px; gap: 6px; align-items: center; background: var(--white); border: 1px solid var(--soft); border-radius: 8px; padding: 8px 12px; font-size: 12px; }
+  .feedback-row .criterio { color: var(--ink); font-weight: 500; }
+  .feedback-row label { text-align: center; cursor: pointer; padding: 4px; border-radius: 5px; transition: background .15s; }
+  .feedback-row label:hover { background: var(--bg2); }
+  .feedback-row input[type=radio] { accent-color: var(--accent); }
+
+  .clase-footer { padding: 16px 32px; border-top: 1.5px solid var(--soft); display: flex; justify-content: space-between; align-items: center; background: var(--bg); }
+  .btn-completar { background: var(--accent2); color: white; border: none; border-radius: 8px; padding: 10px 24px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; transition: all .2s; }
+  .btn-completar:hover { background: #0a6b47; transform: translateY(-1px); }
+  .btn-descargar { background: var(--white); color: var(--ink); border: 1.5px solid var(--soft); border-radius: 8px; padding: 10px 20px; font-family: 'DM Sans', sans-serif; font-size: 13px; cursor: pointer; transition: all .2s; }
+  .btn-descargar:hover { border-color: var(--ink); }
+
+  /* HOME */
+  .home-card { background: var(--white); border-radius: 16px; border: 1.5px solid var(--soft); overflow: hidden; }
+  .home-bienvenida { padding: 32px; background: var(--ink); color: var(--white); position: relative; overflow: hidden; }
+  .home-bienvenida::before { content: '◈'; position: absolute; right: 32px; top: 24px; font-size: 60px; opacity: .07; }
+  .home-bienvenida h2 { font-family: 'Fraunces', serif; font-size: 1.8rem; font-weight: 600; margin-bottom: 8px; }
+  .home-bienvenida p { font-size: 14px; color: rgba(255,255,255,.6); line-height: 1.6; }
+  .sesiones-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+  .sesion-card-home { padding: 20px; border-right: 1.5px solid var(--soft); border-bottom: 1.5px solid var(--soft); cursor: pointer; transition: background .15s; }
+  .sesion-card-home:hover { background: var(--bg); }
+  .sesion-card-home:nth-child(2n) { border-right: none; }
+  .sesion-card-home .num-badge { display: inline-block; width: 28px; height: 28px; border-radius: 50%; text-align: center; line-height: 28px; font-size: 11px; font-weight: 700; color: white; margin-bottom: 8px; }
+  .sesion-card-home h4 { font-size: 13px; font-weight: 600; margin-bottom: 4px; line-height: 1.3; }
+  .sesion-card-home p { font-size: 11px; color: var(--ink2); margin-bottom: 8px; }
+  .sesion-card-home.hecha { opacity: .55; }
+  .sesion-card-home.hecha h4 { text-decoration: line-through; }
+  .progreso-bar { height: 3px; background: var(--soft); border-radius: 2px; margin-top: 6px; overflow: hidden; }
+  .progreso-fill { height: 100%; border-radius: 2px; transition: width .4s ease; }
+
+  .sidebar-toggle { display: none; background: var(--accent); color: white; border: none; border-radius: 8px; padding: 10px 16px; font-family: 'DM Sans', sans-serif; font-size: 13px; cursor: pointer; margin-bottom: 16px; width: 100%; }
+
+  @media (max-width: 768px) {
+    .main { grid-template-columns: 1fr; padding: 20px 16px; }
+    .sidebar { position: static; }
+    .sidebar-toggle { display: block; }
+    .sidebar-nav { display: none; }
+    .sidebar-nav.open { display: block; }
+    .sesiones-grid { grid-template-columns: 1fr; }
+    .sesion-card-home { border-right: none !important; }
+    .feedback-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="header-tag">Tutoría Laboral · 5° Año Secundaria · Orientación Contabilidad · 2025</div>
+    <h1>Ingreso al<br><em>mundo laboral</em></h1>
+    <p class="header-sub">Todo lo que necesitás saber antes de tu primer trabajo</p>
+  </div>
+</header>
+
+<div class="alumno-bar" style="max-width:1100px;margin:0 auto;">
+  <label for="nombre-alumno">Tu nombre:</label>
+  <input type="text" id="nombre-alumno" placeholder="Escribí tu nombre y apellido..." autocomplete="off">
+  <button class="btn-save" onclick="guardarTrabajo()">⬇ Guardar mi portfolio</button>
+</div>
+
+<div class="main">
+  <aside class="sidebar">
+    <button class="sidebar-toggle" onclick="toggleSidebar()">☰ Ver todas las sesiones</button>
+    <div class="sidebar-nav" id="sidebar-nav">
+      <div class="sidebar-title">Programa del año</div>
+      <div class="bloque-nav">
+        <div class="bloque-nav-header" onclick="verHome()">
+          <span class="bloque-dot" style="background:var(--accent)"></span>
+          Inicio / Portfolio
+        </div>
+      </div>
+      <div class="bloque-nav">
+        <div class="bloque-nav-header"><span class="bloque-dot" style="background:var(--b1)"></span>Identidad profesional</div>
+        <a class="nav-clase" onclick="verClase(1)" id="nav-1">Sesión 1 · Autoconocimiento</a>
+        <a class="nav-clase" onclick="verClase(2)" id="nav-2">Sesión 2 · Formas de trabajo</a>
+        <a class="nav-clase" onclick="verClase(3)" id="nav-3">Sesión 3 · Primer día</a>
+      </div>
+      <div class="bloque-nav">
+        <div class="bloque-nav-header"><span class="bloque-dot" style="background:var(--b2)"></span>Comunicación profesional</div>
+        <a class="nav-clase" onclick="verClase(4)" id="nav-4">Sesión 4 · Correo y chat</a>
+        <a class="nav-clase" onclick="verClase(5)" id="nav-5">Sesión 5 · CV y presentación</a>
+        <a class="nav-clase" onclick="verClase(6)" id="nav-6">Sesión 6 · La entrevista</a>
+      </div>
+      <div class="bloque-nav">
+        <div class="bloque-nav-header"><span class="bloque-dot" style="background:var(--b3)"></span>Derechos y tecnología</div>
+        <a class="nav-clase" onclick="verClase(7)" id="nav-7">Sesión 7 · Derechos laborales</a>
+        <a class="nav-clase" onclick="verClase(8)" id="nav-8">Sesión 8 · Tecnología contable</a>
+      </div>
+      <div class="bloque-nav">
+        <div class="bloque-nav-header"><span class="bloque-dot" style="background:var(--b4)"></span>Trabajo y finanzas</div>
+        <a class="nav-clase" onclick="verClase(9)" id="nav-9">Sesión 9 · Equipos y conflictos</a>
+        <a class="nav-clase" onclick="verClase(10)" id="nav-10">Sesión 10 · El primer sueldo</a>
+      </div>
+      <div class="bloque-nav">
+        <div class="bloque-nav-header"><span class="bloque-dot" style="background:var(--b5)"></span>Ética e integración</div>
+        <a class="nav-clase" onclick="verClase(11)" id="nav-11">Sesión 11 · Ética profesional</a>
+        <a class="nav-clase" onclick="verClase(12)" id="nav-12">Sesión 12 · Simulacro final</a>
+      </div>
+    </div>
+  </aside>
+
+  <main class="content" id="content">
+
+    <!-- HOME -->
+    <div class="clase-card visible" id="home">
+      <div class="home-bienvenida">
+        <h2 id="saludo-home">Bienvenido/a a Tutoría Laboral</h2>
+        <p>Este es tu portfolio de preparación para el mundo del trabajo. En cada sesión vas a encontrar una introducción al tema, una explicación y una actividad para completar. Al terminar, podés descargar tu trabajo y entregarlo en Classroom.</p>
+      </div>
+      <div class="sesiones-grid" id="sesiones-home"></div>
+    </div>
+
+    <!-- ══ SESIÓN 1 ══ -->
+    <div class="clase-card" id="clase-1">
+      <div class="clase-header">
+        <div class="clase-num">01</div>
+        <div class="clase-meta">
+          <span class="clase-bloque-tag" style="background:var(--b1)">Identidad profesional</span>
+          <div class="clase-titulo">¿Para qué trabajo? — Autoconocimiento laboral</div>
+          <div class="clase-desc">Antes de buscar trabajo, hay que saber qué traés. Tus fortalezas, tus habilidades y lo que genuinamente querés hacer.</div>
+          <div class="clase-producto">📦 Entregable: Mapa personal de fortalezas</div>
+        </div>
+      </div>
+      <div class="clase-body">
+        <div class="seccion">
+          <div class="seccion-titulo">Para leer antes de la actividad</div>
+          <div class="intro-tema">
+            <h3>¿Por qué el autoconocimiento importa antes de buscar trabajo?</h3>
+            <p>La mayoría de las personas empieza a buscar trabajo sin saber bien qué ofrece. Manda CVs a cualquier lugar, va a entrevistas sin dirección y termina aceptando lo que aparece, no lo que quiere. El autoconocimiento laboral es el paso previo a todo eso.</p>
+            <p>Para esto es útil distinguir dos tipos de habilidades:</p>
+            <div class="concepto-box">
+              <strong>Habilidades duras (hard skills)</strong>
+              Son técnicas y medibles: saber usar Excel, conocer los sistemas contables, manejar AFIP, hablar inglés. Se aprenden en cursos, en la escuela o trabajando.
+            </div>
+            <div class="concepto-box">
+              <strong>Habilidades blandas (soft skills)</strong>
+              Son actitudes y formas de relacionarse: comunicarte bien, trabajar en equipo, ser puntual, adaptarte a cambios, resolver problemas. No se aprenden en un curso, se desarrollan con la experiencia.
+            </div>
+            <p>En el mercado laboral de hoy, las empresas buscan las dos. Y en muchos casos, las habilidades blandas terminan siendo las que definen si alguien crece o no dentro de una organización.</p>
+            <p>En esta sesión vas a construir tu propio mapa de fortalezas: qué sabés hacer, qué actitudes tenés y qué querés desarrollar. No hay respuestas correctas ni incorrectas — solo respuestas honestas.</p>
+          </div>
+        </div>
+        <div class="seccion">
+          <div class="seccion-titulo">Tu actividad — Mapa de Fortalezas</div>
+          <div class="actividad">
+            <div class="info-box"><strong>📝 Instrucción:</strong> Completá cada campo con honestidad. Esto va a ser parte de tu portfolio de ingreso al mundo laboral, así que cuanto más real, más útil te va a resultar.</div>
+            <label class="campo-label">¿Qué trabajo te imaginás teniendo en 5 años? Describilo con la mayor precisión posible (área, tipo de empresa, rol).</label>
+            <textarea class="campo" id="s1-vision" placeholder="Ejemplo: trabajar en el área contable de una empresa mediana, o tener mi propio estudio con clientes..."></textarea>
+            <label class="campo-label">Mis 3 habilidades técnicas más fuertes (contables, digitales, de idiomas, etc.)</label>
+            <input class="campo-inline" id="s1-hard1" placeholder="Habilidad técnica 1...">
+            <input class="campo-inline" id="s1-hard2" placeholder="Habilidad técnica 2...">
+            <input class="campo-inline" id="s1-hard3" placeholder="Habilidad técnica 3...">
+            <label class="campo-label" style="margin-top:4px">Mis 3 habilidades blandas más fuertes (cómo me relaciono, cómo trabajo, actitudes)</label>
+            <input class="campo-inline" id="s1-soft1" placeholder="Habilidad blanda 1...">
+            <input class="campo-inline" id="s1-soft2" placeholder="Habilidad blanda 2...">
+            <input class="campo-inline" id="s1-soft3" placeholder="Habilidad blanda 3...">
+            <label class="campo-label" style="margin-top:4px">3 cosas que quiero aprender o mejorar antes de buscar trabajo</label>
+            <input class="campo-inline" id="s1-dev1" placeholder="Quiero mejorar/aprender...">
+            <input class="campo-inline" id="s1-dev2" placeholder="Quiero mejorar/aprender...">
+            <input class="campo-inline" id="s1-dev3" placeholder="Quiero mejorar/aprender...">
+            <label class="campo-label" style="margin-top:4px">¿Qué es lo que más te gusta del área contable? ¿Qué parte del trabajo futuro te genera más entusiasmo?</label>
+            <textarea class="campo" id="s1-motivacion" placeholder="Sé honesto/a — puede ser algo muy concreto o algo difuso todavía..."></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="clase-footer">
+        <button class="btn-descargar" onclick="descargarSesion(1)">⬇ Descargar esta sesión</button>
+        <button class="btn-completar" onclick="marcarCompletada(1)">Marcar como completada ✓</button>
+      </div>
+    </div>
+
+    <!-- ══ SESIÓN 2 ══ -->
+    <div class="clase-card" id="clase-2">
+      <div class="clase-header">
+        <div class="clase-num">02</div>
+        <div class="clase-meta">
+          <span class="clase-bloque-tag" style="background:var(--b1)">Identidad profesional</span>
+          <div class="clase-titulo">El mundo laboral de hoy: empleado, freelance, emprendedor</div>
+          <div class="clase-desc">No hay un único camino. Pero sí hay que entender qué implica cada uno antes de elegir.</div>
+          <div class="clase-producto">📦 Entregable: Cuadro comparativo con tu decisión</div>
+        </div>
+      </div>
+      <div class="clase-body">
+        <div class="seccion">
+          <div class="seccion-titulo">Para leer antes de la actividad</div>
+          <div class="intro-tema">
+            <h3>Tres formas de trabajar — ninguna es la "correcta"</h3>
+            <p>Cuando pensamos en trabajar, casi siempre imaginamos lo mismo: conseguir empleo en una empresa. Pero el mundo laboral de hoy tiene al menos tres caminos distintos, y en el área contable los tres son posibles.</p>
+            <div class="concepto-box">
+              <strong>Relación de dependencia (empleado)</strong>
+              Trabajás para una empresa o persona. Tenés sueldo fijo, obra social, vacaciones pagas, aguinaldo y aportes jubilatorios. A cambio, tenés horarios y dependés de decisiones de otros.
+            </div>
+            <div class="concepto-box">
+              <strong>Freelance / Autónomo</strong>
+              Ofrecés tus servicios a distintos clientes sin relación de dependencia. Tenés más libertad de horarios y podés trabajar para varios a la vez, pero el ingreso puede ser variable y debés hacerte cargo de tus propios aportes.
+            </div>
+            <div class="concepto-box">
+              <strong>Emprendimiento / Estudio propio</strong>
+              Montás tu propio negocio o estudio contable. Es el mayor nivel de independencia, pero también implica más responsabilidades: conseguir clientes, administrar el dinero y, muchas veces, trabajar más que en relación de dependencia al principio.
+            </div>
+            <p>No existe una opción mejor en términos absolutos. Depende de tu personalidad, tu situación económica, tus metas y cuánto riesgo estás dispuesto a asumir. Lo importante es elegir con información, no por descarte o porque "todos lo hacen".</p>
+          </div>
+        </div>
+        <div class="seccion">
+          <div class="seccion-titulo">Tu actividad — Cuadro comparativo</div>
+          <div class="actividad">
+            <div class="info-box"><strong>📝 Instrucción:</strong> Completá los pros y contras de cada modalidad según <em>tus</em> valores personales, no los "correctos". Lo que para alguien es una ventaja (libertad de horarios), para otro puede ser una desventaja (inestabilidad).</div>
+            <table class="tabla-comparativa">
+              <thead><tr><th>Modalidad</th><th>Ventajas para mí</th><th>Desventajas para mí</th></tr></thead>
+              <tbody>
+                <tr><td>👔 Relación de dependencia</td><td><textarea id="s2-dep-pros" placeholder="¿Qué te atrae?"></textarea></td><td><textarea id="s2-dep-cons" placeholder="¿Qué no te convence?"></textarea></td></tr>
+                <tr><td>💻 Freelance / Autónomo</td><td><textarea id="s2-free-pros" placeholder="¿Qué te atrae?"></textarea></td><td><textarea id="s2-free-cons" placeholder="¿Qué no te convence?"></textarea></td></tr>
+                <tr><td>🏢 Estudio propio / Emprendimiento</td><td><textarea id="s2-emp-pros" placeholder="¿Qué te atrae?"></textarea></td><td><textarea id="s2-emp-cons" placeholder="¿Qué no te convence?"></textarea></td></tr>
+              </tbody>
+            </table>
+            <label class="campo-label" style="margin-top:8px">Tu decisión hoy: ¿qué modalidad elegirías y por qué? (Podés cambiar de opinión en el futuro — esto es una foto de hoy)</label>
+            <textarea class="campo" id="s2-decision" placeholder="Explicá tu razonamiento..."></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="clase-footer">
+        <button class="btn-descargar" onclick="descargarSesion(2)">⬇ Descargar esta sesión</button>
+        <button class="btn-completar" onclick="marcarCompletada(2)">Marcar como completada ✓</button>
+      </div>
+    </div>
+
+    <!-- ══ SESIÓN 3 ══ -->
+    <div class="clase-card" id="clase-3">
+      <div class="clase-header">
+        <div class="clase-num">03</div>
+        <div class="clase-meta">
+          <span class="clase-bloque-tag" style="background:var(--b1)">Identidad profesional</span>
+          <div class="clase-titulo">Primer día de trabajo — qué esperar y cómo comportarse</div>
+          <div class="clase-desc">La primera impresión importa más de lo que parece. Y se puede preparar con anticipación.</div>
+          <div class="clase-producto">📦 Entregable: Checklist del primer día</div>
+        </div>
+      </div>
+      <div class="clase-body">
+        <div class="seccion">
+          <div class="seccion-titulo">Para leer antes de la actividad</div>
+          <div class="intro-tema">
+            <h3>Lo que nadie te explica sobre el primer día</h3>
+            <p>El primer día de trabajo genera mucha ansiedad porque no sabés qué esperar. La mayoría de las personas llega sin prepararse y comete errores que después son difíciles de revertir, porque la primera impresión que generás en un ambiente laboral tiende a quedarse.</p>
+            <p>Hay cosas que podés preparar antes de entrar:</p>
+            <ul>
+              <li><strong>Confirmá el horario</strong> el día anterior. No asumas que es el mismo que te dijeron en la entrevista.</li>
+              <li><strong>Averiguá el código de vestimenta.</strong> En un estudio contable suele ser formal o semi-formal. Si no sabés, preguntá — es mejor preguntar que aparecer mal vestido.</li>
+              <li><strong>Llevá tu documentación lista:</strong> DNI, CUIL, y una cuenta bancaria para el pago del sueldo.</li>
+            </ul>
+            <p>Y hay actitudes que hacen una gran diferencia durante el primer día:</p>
+            <ul>
+              <li><strong>Observá antes de opinar.</strong> Cada empresa tiene una cultura distinta. Lo que en un lugar estaba bien, en otro puede estar mal. Antes de sacar conclusiones, mirá cómo se manejan.</li>
+              <li><strong>No uses el celular</strong> sin permiso explícito, aunque otros lo hagan.</li>
+              <li><strong>Preguntá antes de asumir</strong> cómo hacer las cosas. Un error hecho con buena intención se perdona; uno hecho por no preguntar, menos.</li>
+              <li><strong>No hables mal</strong> de empleos anteriores, de otras empresas ni de personas. Nunca sabés qué conexiones existen.</li>
+            </ul>
+            <p>La clave del primer día es simple: escuchá más de lo que hablás, hacé bien lo que te piden y mostrá buena actitud. El resto viene solo.</p>
+          </div>
+        </div>
+        <div class="seccion">
+          <div class="seccion-titulo">Tu actividad — Checklist del primer día</div>
+          <div class="actividad">
+            <div class="info-box"><strong>📝 Instrucción:</strong> Marcá los ítems que ya conocías y los que aprendiste hoy. Después respondé la pregunta de reflexión.</div>
+            <div class="checklist" id="s3-checklist">
+              <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"><span>Confirmar horario de entrada el día anterior</span></label>
+              <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"><span>Preparar la documentación necesaria (DNI, CUIL, cuenta bancaria)</span></label>
+              <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"><span>Averiguar el código de vestimenta antes de llegar</span></label>
+              <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"><span>Llegar 5-10 minutos antes (no exactamente en punto ni tarde)</span></label>
+              <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"><span>Presentarse con nombre completo y actitud cordial</span></label>
+              <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"><span>Esperar indicaciones antes de asumir familiaridad con alguien</span></label>
+              <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"><span>No usar el celular personal sin permiso explícito</span></label>
+              <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"><span>Observar y escuchar más de lo que se habla el primer día</span></label>
+              <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"><span>Preguntar antes de hacer suposiciones sobre tareas o procesos</span></label>
+              <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"><span>No hablar mal de trabajos, empresas o personas anteriores</span></label>
+              <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"><span>Anotar los nombres de las personas clave con quienes vas a trabajar</span></label>
+              <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"><span>Al terminar, preguntar si hay algo más que necesiten o qué se espera para mañana</span></label>
+            </div>
+            <label class="campo-label" style="margin-top:14px">¿Cuál de estos ítems te sorprendió más o no habías pensado? ¿Agregarías alguno basándote en tu experiencia o la de alguien cercano?</label>
+            <textarea class="campo" id="s3-reflexion" placeholder="Tu reflexión..."></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="clase-footer">
+        <button class="btn-descargar" onclick="descargarSesion(3)">⬇ Descargar esta sesión</button>
+        <button class="btn-completar" onclick="marcarCompletada(3)">Marcar como completada ✓</button>
+      </div>
+    </div>
+
+    <!-- ══ SESIÓN 4 ══ -->
+    <div class="clase-card" id="clase-4">
+      <div class="clase-header">
+        <div class="clase-num">04</div>
+        <div class="clase-meta">
+          <span class="clase-bloque-tag" style="background:var(--b2)">Comunicación profesional</span>
+          <div class="clase-titulo">Comunicación en el trabajo — correo, chat y reuniones</div>
+          <div class="clase-desc">Cómo te comunicás en el trabajo define cómo te perciben. Es una habilidad que se entrena.</div>
+          <div class="clase-producto">📦 Entregable: Correo profesional redactado</div>
+        </div>
+      </div>
+      <div class="clase-body">
+        <div class="seccion">
+          <div class="seccion-titulo">Para leer antes de la actividad</div>
+          <div class="intro-tema">
+            <h3>El tono que no ves, pero todos sienten</h3>
+            <p>En el trabajo vas a comunicarte por muchos canales: correo electrónico, chat interno (WhatsApp, Teams, Slack), reuniones y documentos. Cada canal tiene sus reglas no escritas, y usarlos mal puede generar malentendidos o una mala imagen, aunque no sea tu intención.</p>
+            <p><strong>El correo electrónico</strong> es el canal más formal. Tiene estructura: asunto claro, saludo, cuerpo con el mensaje y despedida. Los errores más comunes son: no poner asunto, escribir sin contexto ("te mando lo que me pediste" sin aclarar qué), responder solo "ok" cuando se espera una confirmación o acción, y no revisar la ortografía.</p>
+            <p><strong>El chat laboral</strong> (WhatsApp de empresa, Teams, Slack) es más informal, pero sigue siendo un canal de trabajo. Escribir en minúsculas, con abreviaturas o sin puntuación puede parecer descuido. No es lo mismo que hablar con amigos.</p>
+            <p><strong>Las reuniones</strong> tienen un propósito. Llegar preparado, participar cuando corresponde y no quedarse mirando el celular son actitudes básicas que marcan la diferencia.</p>
+            <div class="concepto-box">
+              <strong>Estructura de un correo profesional</strong>
+              Asunto claro y específico → Saludo formal (Estimado/a…) → Párrafo de contexto → Cuerpo del mensaje → Cierre con acción esperada → Despedida (Quedo a disposición / Saludos cordiales) → Tu nombre completo
+            </div>
+          </div>
+        </div>
+        <div class="seccion">
+          <div class="seccion-titulo">Tu actividad — Redacción de correo profesional</div>
+          <div class="actividad">
+            <div class="info-box"><strong>📝 Instrucción:</strong> Elegí una de las tres situaciones y redactá el correo completo con asunto, saludo, cuerpo y despedida.</div>
+            <label class="campo-label">Situación elegida:</label>
+            <div class="likert" id="s4-situacion" style="margin-bottom:14px">
+              <div class="likert-opt" onclick="selLikert('s4-situacion',this)">A · Avisarle a tu jefe que llegás tarde por un problema de transporte</div>
+              <div class="likert-opt" onclick="selLikert('s4-situacion',this)">B · Pedirle información a un proveedor sobre una factura pendiente</div>
+              <div class="likert-opt" onclick="selLikert('s4-situacion',this)">C · Enviarle un informe terminado a tu supervisor</div>
+            </div>
+            <label class="campo-label">Asunto del correo:</label>
+            <input class="campo-inline" id="s4-asunto" placeholder="Escribí el asunto...">
+            <label class="campo-label">Cuerpo del correo (saludo, desarrollo y despedida):</label>
+            <textarea class="campo" id="s4-cuerpo" style="min-height:160px" placeholder="Estimado/a..."></textarea>
+            <label class="campo-label">¿Qué fue lo más difícil de redactar? ¿Qué cambiarías si lo releyeras mañana?</label>
+            <textarea class="campo" id="s4-reflexion" placeholder="Tu reflexión..."></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="clase-footer">
+        <button class="btn-descargar" onclick="descargarSesion(4)">⬇ Descargar esta sesión</button>
+        <button class="btn-completar" onclick="marcarCompletada(4)">Marcar como completada ✓</button>
+      </div>
+    </div>
+
+    <!-- ══ SESIÓN 5 ══ -->
+    <div class="clase-card" id="clase-5">
+      <div class="clase-header">
+        <div class="clase-num">05</div>
+        <div class="clase-meta">
+          <span class="clase-bloque-tag" style="background:var(--b2)">Comunicación profesional</span>
+          <div class="clase-titulo">El CV y la carta de presentación</div>
+          <div class="clase-desc">No es un formulario burocrático. Es tu primera herramienta de marketing personal.</div>
+          <div class="clase-producto">📦 Entregable: Borrador de CV propio</div>
+        </div>
+      </div>
+      <div class="clase-body">
+        <div class="seccion">
+          <div class="seccion-titulo">Para leer antes de la actividad</div>
+          <div class="intro-tema">
+            <h3>El CV no es un resumen de tu vida — es una herramienta de venta</h3>
+            <p>Quien recibe un CV tarda entre 6 y 10 segundos en decidir si lo sigue leyendo. No busca la historia de tu vida: busca si tenés lo que necesita. Por eso, el CV tiene que ser claro, relevante y sin errores.</p>
+            <p><strong>Secciones obligatorias:</strong> datos de contacto actualizados (teléfono, mail profesional, ciudad), formación académica, experiencia laboral y habilidades. Si no tenés experiencia formal, podés incluir trabajos informales, ayuda en negocios familiares, voluntariados o proyectos escolares — todo cuenta.</p>
+            <p><strong>Errores que te eliminan automáticamente:</strong></p>
+            <ul>
+              <li>Faltas de ortografía — se interpretan como descuido</li>
+              <li>Foto inapropiada o informal</li>
+              <li>Mail poco profesional (ejemplo: <em>guerrero_del_amor@...</em>)</li>
+              <li>Información desactualizada o que no aplica al puesto</li>
+              <li>Mentiras — se verifican en la entrevista y destruyen tu credibilidad</li>
+            </ul>
+            <p><strong>La carta de presentación</strong> no siempre se pide, pero cuando se pide, es tu oportunidad de explicar por qué querés ese trabajo específico y qué podés aportar. No es copiar el CV en prosa — es agregar algo que el CV no puede mostrar.</p>
+          </div>
+        </div>
+        <div class="seccion">
+          <div class="seccion-titulo">Tu actividad — Borrador de CV</div>
+          <div class="actividad">
+            <div class="info-box"><strong>📝 Instrucción:</strong> Completá cada sección con tu información real. Si alguna está vacía, es una señal de algo a trabajar antes de buscar empleo. Este borrador puede servirte como base para armar tu CV definitivo.</div>
+            <label class="campo-label">📋 Datos de contacto (nombre completo, teléfono, mail, ciudad)</label>
+            <textarea class="campo" id="s5-contacto" style="min-height:70px" placeholder="Nombre · Teléfono · Email · Ciudad..."></textarea>
+            <label class="campo-label">🎓 Formación académica</label>
+            <textarea class="campo" id="s5-formacion" style="min-height:70px" placeholder="Institución · Título · Año de egreso (o egreso previsto)..."></textarea>
+            <label class="campo-label">💼 Experiencia laboral (incluí trabajos informales, temporales, ayudas familiares — todo vale)</label>
+            <textarea class="campo" id="s5-experiencia" placeholder="Empresa o lugar · Tareas que hacías · Período de tiempo..."></textarea>
+            <label class="campo-label">⚙️ Habilidades técnicas y herramientas</label>
+            <textarea class="campo" id="s5-habilidades" style="min-height:70px" placeholder="Excel, AFIP, sistemas contables, idiomas, herramientas digitales..."></textarea>
+            <label class="campo-label">✨ Extras (cursos, voluntariado, certificaciones, logros escolares)</label>
+            <textarea class="campo" id="s5-extras" style="min-height:70px" placeholder="Cursos, reconocimientos, actividades extracurriculares..."></textarea>
+            <label class="campo-label">¿Qué sección te resultó más difícil de completar? ¿Qué te dice eso sobre lo que tenés que trabajar?</label>
+            <textarea class="campo" id="s5-reflexion" placeholder="Tu reflexión..."></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="clase-footer">
+        <button class="btn-descargar" onclick="descargarSesion(5)">⬇ Descargar esta sesión</button>
+        <button class="btn-completar" onclick="marcarCompletada(5)">Marcar como completada ✓</button>
+      </div>
+    </div>
+
+    <!-- ══ SESIÓN 6 ══ -->
+    <div class="clase-card" id="clase-6">
+      <div class="clase-header">
+        <div class="clase-num">06</div>
+        <div class="clase-meta">
+          <span class="clase-bloque-tag" style="background:var(--b2)">Comunicación profesional</span>
+          <div class="clase-titulo">La entrevista de trabajo</div>
+          <div class="clase-desc">La entrevista se practica. Cuantas más veces la simulás, menos nervios el día real.</div>
+          <div class="clase-producto">📦 Entregable: Respuestas preparadas + autoevaluación</div>
+        </div>
+      </div>
+      <div class="clase-body">
+        <div class="seccion">
+          <div class="seccion-titulo">Para leer antes de la actividad</div>
+          <div class="intro-tema">
+            <h3>Cómo prepararte para una entrevista</h3>
+            <p>La mayoría de las personas va a una entrevista esperando "ver qué pasa". Las que se preparan tienen una ventaja enorme, porque las preguntas más frecuentes son bastante predecibles.</p>
+            <p>Las preguntas más comunes son: "Contame de vos", "¿Cuáles son tus fortalezas y debilidades?", "¿Por qué querés trabajar acá?", "¿Dónde te ves en 5 años?" y "¿Por qué deberíamos contratarte?". Ninguna de estas tiene una respuesta mágica, pero todas se pueden preparar con honestidad.</p>
+            <div class="concepto-box">
+              <strong>Método STAR para responder preguntas de situación</strong>
+              Cuando te preguntan "contame una vez que..." la mejor forma de responder es: <strong>S</strong>ituación (contexto) → <strong>T</strong>area (qué tenías que hacer) → <strong>A</strong>cción (qué hiciste vos) → <strong>R</strong>esultado (qué pasó). Es claro, concreto y demuestra que sabés contar lo que hacés.
+            </div>
+            <p><strong>El lenguaje corporal también comunica.</strong> Contacto visual, postura erguida, hablar a un ritmo moderado y evitar los "ehhh" y "tipo" dan una imagen de seguridad, aunque no te sientas seguro por dentro.</p>
+            <p><strong>En entrevistas virtuales</strong> hay que cuidar el fondo (que sea prolijo), el audio, la conexión y la puntualidad digital — entrar a la videollamada 2-3 minutos antes.</p>
+            <p>Al final de la entrevista, casi siempre te preguntan si tenés preguntas. Siempre respondé que sí y tené una o dos preparadas: sobre las tareas del puesto, el equipo o las posibilidades de crecimiento. Lo que <em>no</em> hay que preguntar en la primera entrevista es el sueldo.</p>
+          </div>
+        </div>
+        <div class="seccion">
+          <div class="seccion-titulo">Tu actividad — Preparación para la entrevista</div>
+          <div class="actividad">
+            <div class="info-box"><strong>📝 Instrucción:</strong> Respondé estas preguntas como si fuera una entrevista real. Sé específico/a y usá el método STAR cuando aplique. Después completá tu autoevaluación del role-play de clase.</div>
+            <label class="campo-label">1. "Contame de vos en 2 minutos." — Redactá tu presentación personal.</label>
+            <textarea class="campo" id="s6-presentacion" placeholder="Empezá con tu nombre, tu formación y algo relevante sobre vos. No más de 4-5 oraciones..."></textarea>
+            <label class="campo-label">2. "¿Cuáles son tus fortalezas y tus debilidades?" — Evitá las respuestas de manual ("soy muy perfeccionista"). Sé honesto/a.</label>
+            <textarea class="campo" id="s6-fyd" placeholder="Fortalezas: ... / Debilidades reales y cómo las estás trabajando: ..."></textarea>
+            <label class="campo-label">3. "¿Por qué deberíamos contratarte?" — Usá el método STAR si podés apoyarte en un ejemplo real.</label>
+            <textarea class="campo" id="s6-porquevo" placeholder="Situación / Tarea / Acción que tomé / Resultado que obtuve..."></textarea>
+            <label class="campo-label">4. "¿Dónde te ves en 5 años?"</label>
+            <textarea class="campo" id="s6-5anios" placeholder="Tu respuesta honesta — no hace falta que sea grandiosa, sí que sea tuya..."></textarea>
+            <label class="campo-label">Autoevaluación del role-play de clase: ¿qué te salió bien y qué mejorarías?</label>
+            <textarea class="campo" id="s6-autoevaluacion" placeholder="Sé específico/a — qué parte te costó más (el nerviosismo, las palabras, el tono, el contenido)..."></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="clase-footer">
+        <button class="btn-descargar" onclick="descargarSesion(6)">⬇ Descargar esta sesión</button>
+        <button class="btn-completar" onclick="marcarCompletada(6)">Marcar como completada ✓</button>
+      </div>
+    </div>
+
+    <!-- ══ SESIÓN 7 ══ -->
+    <div class="clase-card" id="clase-7">
+      <div class="clase-header">
+        <div class="clase-num">07</div>
+        <div class="clase-meta">
+          <span class="clase-bloque-tag" style="background:var(--b3)">Derechos y tecnología</span>
+          <div class="clase-titulo">Derechos y obligaciones laborales básicos</div>
+          <div class="clase-desc">Conocer tus derechos no es opcional. Es parte del trabajo.</div>
+          <div class="clase-producto">📦 Entregable: Análisis de caso laboral</div>
+        </div>
+      </div>
+      <div class="clase-body">
+        <div class="seccion">
+          <div class="seccion-titulo">Para leer antes de la actividad</div>
+          <div class="intro-tema">
+            <h3>Lo que tenés que saber antes de firmar (o de no firmar)</h3>
+            <p>Muchas personas comienzan a trabajar sin entender qué derechos tienen. Y eso las deja en una posición vulnerable frente a empleadores que se aprovechan de esa ignorancia. Conocer lo básico no te convierte en conflictivo: te convierte en alguien difícil de estafar.</p>
+            <div class="concepto-box">
+              <strong>Tipos de contrato laboral en Argentina</strong>
+              Relación de dependencia por tiempo indeterminado (el más común), contrato a plazo fijo (tiene fecha de vencimiento) y pasantía (para estudiantes, con requisitos específicos). Trabajar sin ninguno de estos es trabajo "en negro".
+            </div>
+            <p><strong>Tus derechos básicos en relación de dependencia:</strong> sueldo igual o mayor al mínimo vital y móvil, aguinaldo (SAC) en junio y diciembre, vacaciones pagas según antigüedad, obra social, aportes jubilatorios y licencia por enfermedad.</p>
+            <p><strong>Trabajar en negro</strong> (sin registro) significa que no tenés ninguno de esos derechos. Si te despiden, no cobrás indemnización. Si te enfermás, no te pagan. Si querés jubilarte, esos años no te cuentan. Es más riesgoso de lo que parece a corto plazo.</p>
+            <p><strong>¿A quién recurrir si hay un problema?</strong></p>
+            <ul>
+              <li><strong>Ministerio de Trabajo</strong> — para denunciar condiciones ilegales o falta de pago</li>
+              <li><strong>AFIP / ARCA</strong> — para verificar si estás registrado como empleado</li>
+              <li><strong>ANSES</strong> — para consultas sobre aportes y jubilación</li>
+              <li><strong>Sindicato del sector</strong> — para asesoramiento sobre convenios colectivos</li>
+            </ul>
+          </div>
+        </div>
+        <div class="seccion">
+          <div class="seccion-titulo">Tu actividad — Análisis de caso</div>
+          <div class="actividad">
+            <div class="caso-box"><strong>Caso:</strong> Martina (19 años) empezó a trabajar en un estudio contable hace 3 meses. Trabaja 6 horas diarias de lunes a viernes. Le pagan en efectivo. Nunca firmó ningún contrato. No tiene obra social. Cuando se enfermó 3 días, no le pagaron esos días y le dijeron que si faltaba mucho "no iba a poder seguir". Martina necesita el trabajo.</div>
+            <label class="campo-label">¿Qué derechos laborales no se están respetando en este caso? Nombrá al menos tres.</label>
+            <textarea class="campo" id="s7-derechos" placeholder="Derecho 1: ... / Derecho 2: ... / Derecho 3: ..."></textarea>
+            <label class="campo-label">¿A qué organismos podría recurrir Martina? ¿Para qué sirve cada uno en este caso concreto?</label>
+            <textarea class="campo" id="s7-instituciones" placeholder="Organismo · Para qué lo usaría en este caso..."></textarea>
+            <label class="campo-label">¿Qué harías vos en la situación de Martina? ¿Es tan simple como "reclamar"? ¿Qué complicaciones ves?</label>
+            <textarea class="campo" id="s7-opinion" placeholder="Tu análisis honesto — no hay respuesta correcta..."></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="clase-footer">
+        <button class="btn-descargar" onclick="descargarSesion(7)">⬇ Descargar esta sesión</button>
+        <button class="btn-completar" onclick="marcarCompletada(7)">Marcar como completada ✓</button>
+      </div>
+    </div>
+
+    <!-- ══ SESIÓN 8 ══ -->
+    <div class="clase-card" id="clase-8">
+      <div class="clase-header">
+        <div class="clase-num">08</div>
+        <div class="clase-meta">
+          <span class="clase-bloque-tag" style="background:var(--b3)">Derechos y tecnología</span>
+          <div class="clase-titulo">La tecnología en el trabajo contable</div>
+          <div class="clase-desc">Quien sabe manejar bien la tecnología contable tiene ventaja en el mercado laboral. ¿Qué te falta aprender?</div>
+          <div class="clase-producto">📦 Entregable: Mapa de herramientas digitales</div>
+        </div>
+      </div>
+      <div class="clase-body">
+        <div class="seccion">
+          <div class="seccion-titulo">Para leer antes de la actividad</div>
+          <div class="intro-tema">
+            <h3>El trabajo contable hoy: menos papel, más pantalla</h3>
+            <p>La contabilidad cambió mucho en los últimos años. Muchas tareas que antes se hacían a mano o en papel hoy están automatizadas o digitalizadas. Esto tiene dos consecuencias: hay menos trabajo manual repetitivo, y hay más demanda de personas que saben manejar esas herramientas.</p>
+            <p><strong>Las herramientas que más piden los empleadores del sector contable hoy son:</strong></p>
+            <ul>
+              <li><strong>Excel avanzado</strong> (fórmulas, tablas dinámicas, BUSCARV) — sigue siendo la herramienta más pedida en cualquier puesto administrativo o contable</li>
+              <li><strong>Sistemas de gestión contable</strong> como Tango o Bejerman — muy usados en estudios y empresas medianas</li>
+              <li><strong>AFIP / ARCA online</strong> — facturación electrónica, presentación de declaraciones juradas, consultas de CUIT</li>
+              <li><strong>Google Drive y herramientas colaborativas</strong> — cada vez más empresas trabajan en la nube</li>
+              <li><strong>LinkedIn</strong> — no es solo para buscar trabajo; también es donde los empleadores te buscan a vos</li>
+            </ul>
+            <div class="concepto-box">
+              <strong>La conexión con programación</strong>
+              Python, el lenguaje que ves en Lógica y Programación, se usa cada vez más en contabilidad para automatizar tareas repetitivas: generar reportes, procesar planillas, controlar stock. No hace falta ser programador/a, pero entender la lógica te da una ventaja real frente a candidatos que no la tienen.
+            </div>
+          </div>
+        </div>
+        <div class="seccion">
+          <div class="seccion-titulo">Tu actividad — Mapa de herramientas digitales</div>
+          <div class="actividad">
+            <div class="info-box"><strong>📝 Instrucción:</strong> Para cada herramienta, marcá tu nivel real. Después respondé las preguntas de reflexión.</div>
+            <table class="tabla-comparativa">
+              <thead><tr><th>Herramienta</th><th>Ya la uso bien</th><th>La conozco pero poco</th><th>No la conocía</th></tr></thead>
+              <tbody id="s8-tabla"></tbody>
+            </table>
+            <label class="campo-label" style="margin-top:12px">¿Cuáles de estas herramientas te parece más urgente aprender antes de buscar trabajo? ¿Por qué?</label>
+            <textarea class="campo" id="s8-urgentes" placeholder="Tus 2-3 prioridades y el motivo..."></textarea>
+            <label class="campo-label">¿Cómo conecta lo que aprendés en Lógica y Programación con el trabajo contable? ¿Lo habías pensado antes?</label>
+            <textarea class="campo" id="s8-conexion" placeholder="Tu reflexión..."></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="clase-footer">
+        <button class="btn-descargar" onclick="descargarSesion(8)">⬇ Descargar esta sesión</button>
+        <button class="btn-completar" onclick="marcarCompletada(8)">Marcar como completada ✓</button>
+      </div>
+    </div>
+
+    <!-- ══ SESIÓN 9 ══ -->
+    <div class="clase-card" id="clase-9">
+      <div class="clase-header">
+        <div class="clase-num">09</div>
+        <div class="clase-meta">
+          <span class="clase-bloque-tag" style="background:var(--b4)">Trabajo y finanzas</span>
+          <div class="clase-titulo">Trabajo en equipo y conflictos laborales</div>
+          <div class="clase-desc">Los conflictos en el trabajo son inevitables. Lo que importa es cómo los manejás.</div>
+          <div class="clase-producto">📦 Entregable: Análisis de conflicto laboral</div>
+        </div>
+      </div>
+      <div class="clase-body">
+        <div class="seccion">
+          <div class="seccion-titulo">Para leer antes de la actividad</div>
+          <div class="intro-tema">
+            <h3>Trabajar en equipo no es lo mismo que dividirse tareas</h3>
+            <p>Trabajar en equipo de verdad implica comunicarse, ajustarse a los ritmos de otros, manejar diferencias y resolver problemas juntos. Es una de las habilidades más valoradas en el mundo laboral y también una de las más difíciles de aprender.</p>
+            <p><strong>Los conflictos laborales más frecuentes</strong> son por diferencias en la forma de trabajar, incumplimiento de compromisos, malentendidos en la comunicación y competencia interna. Casi nunca son por "mala onda" real — generalmente son por expectativas no comunicadas.</p>
+            <p>Para resolverlos existe un enfoque llamado <strong>comunicación asertiva</strong>: decir lo que necesitás, sin atacar ni callarte. Se opone a dos estilos que suelen generar más problemas:</p>
+            <div class="concepto-box">
+              <strong>Agresivo vs. Pasivo vs. Asertivo</strong>
+              <strong>Agresivo:</strong> "Vos nunca cumplís, sos un irresponsable." — ataca a la persona.<br>
+              <strong>Pasivo:</strong> No decir nada, aguantarse y acumular resentimiento.<br>
+              <strong>Asertivo:</strong> "Cuando no entregás a tiempo, yo tengo que corregir todo a último momento y eso me genera mucho estrés. Necesito que acordemos fechas realistas." — habla de hechos y necesidades.
+            </div>
+            <p>La fórmula asertiva es simple: <strong>"Cuando vos hacés X / yo me siento Y / necesito Z."</strong> No es magia, pero obliga a hablar de situaciones concretas en lugar de atacar a la persona.</p>
+          </div>
+        </div>
+        <div class="seccion">
+          <div class="seccion-titulo">Tu actividad — Análisis de conflicto laboral</div>
+          <div class="actividad">
+            <div class="caso-box"><strong>Caso:</strong> Diego y Lucía trabajan juntos en un estudio contable en el mismo proyecto. Lucía cree que Diego hace todo a último momento y genera errores que ella tiene que corregir. Diego cree que Lucía es demasiado exigente y nunca está conforme con nada. El lunes tienen que entregar un informe al cliente y ninguno de los dos se habla.</div>
+            <label class="campo-label">¿Qué está pasando realmente en este equipo? ¿Cuál creés que es el problema de fondo?</label>
+            <textarea class="campo" id="s9-analisis" placeholder="Tu análisis — más allá de quién tiene razón..."></textarea>
+            <label class="campo-label">¿Qué estilo de comunicación está usando cada uno? ¿Agresivo, pasivo o asertivo?</label>
+            <textarea class="campo" id="s9-estilos" placeholder="Diego: ... / Lucía: ..."></textarea>
+            <label class="campo-label">Usá la fórmula asertiva para reformular el conflicto desde el punto de vista de cada uno:<br>"Cuando vos... / yo me siento... / necesito..."</label>
+            <textarea class="campo" id="s9-formula" placeholder="Como Diego: Cuando vos... / Como Lucía: Cuando vos..."></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="clase-footer">
+        <button class="btn-descargar" onclick="descargarSesion(9)">⬇ Descargar esta sesión</button>
+        <button class="btn-completar" onclick="marcarCompletada(9)">Marcar como completada ✓</button>
+      </div>
+    </div>
+
+    <!-- ══ SESIÓN 10 ══ -->
+    <div class="clase-card" id="clase-10">
+      <div class="clase-header">
+        <div class="clase-num">10</div>
+        <div class="clase-meta">
+          <span class="clase-bloque-tag" style="background:var(--b4)">Trabajo y finanzas</span>
+          <div class="clase-titulo">Finanzas personales — el primer sueldo</div>
+          <div class="clase-desc">El dinero no se administra solo. Cuanto antes lo aprendés, mejor te va.</div>
+          <div class="clase-producto">📦 Entregable: Presupuesto mensual simulado</div>
+        </div>
+      </div>
+      <div class="clase-body">
+        <div class="seccion">
+          <div class="seccion-titulo">Para leer antes de la actividad</div>
+          <div class="intro-tema">
+            <h3>El primer sueldo: por qué casi siempre desaparece antes de fin de mes</h3>
+            <p>Recibir el primer sueldo es una de las sensaciones más buenas que existen. Y también es el momento en que muchas personas cometen los errores financieros más costosos: gastan todo, no ahorran nada y se endeudan con cuotas que después no pueden pagar.</p>
+            <p><strong>Lo primero que tenés que entender es la diferencia entre sueldo bruto y sueldo neto.</strong> El sueldo bruto es lo que te prometieron. El sueldo neto es lo que efectivamente te depositan, después de los descuentos obligatorios: jubilación (11%), obra social (3%), y en algunos casos impuesto a las ganancias. En la práctica, podés recibir entre un 15% y un 30% menos de lo que figura en el contrato.</p>
+            <div class="concepto-box">
+              <strong>Gastos fijos vs. gastos variables</strong>
+              <strong>Fijos:</strong> los que pagás todos los meses sin importar lo que hagas (alquiler, transporte, servicios). <strong>Variables:</strong> los que cambian según tus decisiones (salidas, ropa, entretenimiento). Para administrar bien, primero cubrís los fijos, después los variables.
+            </div>
+            <p><strong>El error más común:</strong> ahorrar "lo que sobra". Casi nunca sobra nada. El ahorro que funciona es el que se separa <em>antes</em> de gastar: apenas te depositan, transferís un porcentaje fijo a una cuenta separada. Aunque sea el 5% o el 10%, lo que importa es el hábito.</p>
+          </div>
+        </div>
+        <div class="seccion">
+          <div class="seccion-titulo">Tu actividad — Presupuesto mensual simulado</div>
+          <div class="actividad">
+            <div class="info-box"><strong>📝 Instrucción:</strong> Tu sueldo neto simulado es <strong>$480.000</strong>. Distribuilo entre los gastos de la tabla. Si no te alcanza, indicá qué recortarías. Intentá separar algo para ahorro.</div>
+            <table class="tabla-comparativa">
+              <thead><tr><th>Gasto</th><th>Monto que asignarías ($)</th></tr></thead>
+              <tbody>
+                <tr><td>🏠 Alquiler / aporte a la familia</td><td><textarea id="s10-alquiler" style="min-height:40px" placeholder="$"></textarea></td></tr>
+                <tr><td>🚌 Transporte</td><td><textarea id="s10-transporte" style="min-height:40px" placeholder="$"></textarea></td></tr>
+                <tr><td>🍽️ Comida (mercado y día a día)</td><td><textarea id="s10-comida" style="min-height:40px" placeholder="$"></textarea></td></tr>
+                <tr><td>📱 Servicios (celular, internet)</td><td><textarea id="s10-servicios" style="min-height:40px" placeholder="$"></textarea></td></tr>
+                <tr><td>👕 Ropa / higiene personal</td><td><textarea id="s10-ropa" style="min-height:40px" placeholder="$"></textarea></td></tr>
+                <tr><td>🎮 Ocio y salidas</td><td><textarea id="s10-ocio" style="min-height:40px" placeholder="$"></textarea></td></tr>
+                <tr><td>💰 Ahorro (separalo primero)</td><td><textarea id="s10-ahorro" style="min-height:40px" placeholder="$"></textarea></td></tr>
+                <tr><td>📦 Otros gastos</td><td><textarea id="s10-otros" style="min-height:40px" placeholder="$"></textarea></td></tr>
+              </tbody>
+            </table>
+            <label class="campo-label" style="margin-top:12px">¿Te alcanzó el sueldo? ¿Qué tuviste que recortar? ¿Pudiste separar algo para ahorro? ¿Qué te sorprendió del ejercicio?</label>
+            <textarea class="campo" id="s10-reflexion" placeholder="Contá cómo te fue con el presupuesto..."></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="clase-footer">
+        <button class="btn-descargar" onclick="descargarSesion(10)">⬇ Descargar esta sesión</button>
+        <button class="btn-completar" onclick="marcarCompletada(10)">Marcar como completada ✓</button>
+      </div>
+    </div>
+
+    <!-- ══ SESIÓN 11 ══ -->
+    <div class="clase-card" id="clase-11">
+      <div class="clase-header">
+        <div class="clase-num">11</div>
+        <div class="clase-meta">
+          <span class="clase-bloque-tag" style="background:var(--b5)">Ética e integración</span>
+          <div class="clase-titulo">Ética e integridad en el trabajo contable</div>
+          <div class="clase-desc">En contabilidad, firmás con tu nombre. Eso tiene consecuencias legales y profesionales reales.</div>
+          <div class="clase-producto">📦 Entregable: Dilema ético resuelto</div>
+        </div>
+      </div>
+      <div class="clase-body">
+        <div class="seccion">
+          <div class="seccion-titulo">Para leer antes de la actividad</div>
+          <div class="intro-tema">
+            <h3>¿Por qué la ética importa especialmente en contabilidad?</h3>
+            <p>En muchas profesiones, un error ético tiene consecuencias para vos. En contabilidad, puede tenerlas también para terceros: clientes, empleados, el Estado, proveedores. Un contador o una contadora que firma documentos falsos no solo pierde el trabajo: puede ser inhabilitado para ejercer la profesión e incluso tener consecuencias penales.</p>
+            <p>Es importante distinguir tres cosas que a veces se confunden:</p>
+            <div class="concepto-box">
+              <strong>Legal vs. Ético vs. Conveniente</strong>
+              <strong>Legal:</strong> lo que la ley permite. <strong>Ético:</strong> lo que está bien hacer, aunque la ley no lo obligue. <strong>Conveniente:</strong> lo que te beneficia en el corto plazo. Las tres pueden coincidir o no: algo puede ser legal pero no ético, o ético pero inconveniente.
+            </div>
+            <p><strong>La presión institucional</strong> es real. En muchos casos, no vas a ser vos quien propone algo cuestionable — va a ser tu jefe, tu client    <!-- ══ SESIÓN 11 ══ -->
+    <div class="clase-card" id="clase-11">
+      <div class="clase-header">
+        <div class="clase-num">11</div>
+        <div class="clase-meta">
+          <span class="clase-bloque-tag" style="background:var(--b5)">Ética e integración</span>
+          <div class="clase-titulo">Ética e integridad en el trabajo contable</div>
+          <div class="clase-desc">En contabilidad, firmás con tu nombre. Eso tiene consecuencias legales y profesionales reales.</div>
+          <div class="clase-producto">📦 Entregable: Dilema ético resuelto</div>
+        </div>
+      </div>
+      <div class="clase-body">
+        <div class="seccion">
+          <div class="seccion-titulo">Para leer antes de la actividad</div>
+          <div class="intro-tema">
+            <h3>¿Por qué la ética importa especialmente en contabilidad?</h3>
+            <p>En muchas profesiones, un error ético tiene consecuencias para vos. En contabilidad, puede tenerlas también para terceros: clientes, empleados, el Estado, proveedores. Un contador o contadora que firma documentos falsos no solo pierde el trabajo: puede ser inhabilitado para ejercer la profesión e incluso tener consecuencias penales.</p>
+            <p>Es importante distinguir tres cosas que a veces se confunden:</p>
+            <div class="concepto-box">
+              <strong>Legal vs. Ético vs. Conveniente</strong>
+              <strong>Legal:</strong> lo que la ley permite. <strong>Ético:</strong> lo que está bien hacer, aunque la ley no lo obligue. <strong>Conveniente:</strong> lo que te beneficia a corto plazo. Las tres pueden coincidir o no.
+            </div>
+            <p><strong>La presión institucional</strong> es real. En muchos casos no vas a ser vos quien propone algo cuestionable — va a ser tu jefe, tu cliente o la empresa. La pregunta es: ¿qué hacés cuando alguien con más poder te pide algo que no está bien?</p>
+            <p>No hay una respuesta fácil. Pero algo es claro: <strong>la reputación profesional se tarda años en construir y minutos en destruir</strong>. En el mundo contable, donde la confianza es la base de todo, eso vale especialmente.</p>
+          </div>
+        </div>
+        <div class="seccion">
+          <div class="seccion-titulo">Tu actividad — Dilema ético</div>
+          <div class="actividad">
+            <div class="caso-box"><strong>Situación:</strong> Trabajas hace 6 meses en un estudio contable. Tu jefe te dice que la empresa cliente "necesita que los números cierren" y te pide que registres gastos mayores a los reales para reducir impuestos. Te explica que "todos lo hacen" y que si no podés hacerlo, "no sos el perfil que buscan". Necesítas el trabajo.</div>
+            <label class="campo-label">¿Qué harías? Describí tu decisión con detalle.</label>
+            <textarea class="campo" id="s11-decision" placeholder="Tu decisión y el razonamiento detrás..."></textarea>
+            <label class="campo-label">¿Cuáles serían las consecuencias legales y profesionales de acceder? ¿Y de negarte?</label>
+            <textarea class="campo" id="s11-consecuencias" placeholder="Consecuencias de acceder: ... / Consecuencias de negarte: ..."></textarea>
+            <label class="campo-label">Si decíis negarte, ¿cómo se lo comunicarías a tu jefe de forma profesional?</label>
+            <textarea class="campo" id="s11-comunicacion" placeholder="¿Cómo lo dirías concretamente?"></textarea>
+            <label class="campo-label">En este caso, ¿qué es lo legal, qué es lo ético y qué es lo conveniente? ¿Coinciden?</label>
+            <textarea class="campo" id="s11-reflexion" placeholder="Tu análisis..."></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="clase-footer">
+        <button class="btn-descargar" onclick="descargarSesion(11)">⬇ Descargar esta sesión</button>
+        <button class="btn-completar" onclick="marcarCompletada(11)">Marcar como completada ✓</button>
+      </div>
+    </div>
+
+    <!-- ══ SESIÓN 12 ══ -->
+    <div class="clase-card" id="clase-12">
+      <div class="clase-header">
+        <div class="clase-num">12</div>
+        <div class="clase-meta">
+          <span class="clase-bloque-tag" style="background:var(--b5)">Ética e integración</span>
+          <div class="clase-titulo">Simulacro de proceso de selección completo</div>
+          <div class="clase-desc">Cierre del año: todo lo que aprendiste, en acción. Ya sabés más de lo que creés.</div>
+          <div class="clase-producto">📦 Entregable: Presentación personal + carta de cierre</div>
+        </div>
+      </div>
+      <div class="clase-body">
+        <div class="seccion">
+          <div class="seccion-titulo">Para leer antes de la actividad</div>
+          <div class="intro-tema">
+            <h3>El simulacro: juntando todo lo del año</h3>
+            <p>En esta última sesión vas a simular un proceso de selección real. Un proceso típico tiene tres etapas: revisión del CV, entrevista personal y, a veces, una prueba técnica. Hoy nos enfocamos en las dos primeras.</p>
+            <p><strong>Tu CV</strong> ya tiene un borrador de la sesión 5. Para el simulacro, traelo lo más completo posible.</p>
+            <p><strong>La presentación personal de 2 minutos</strong> tiene que responder tres preguntas sin que te las hagan: ¿quién sos?, ¿qué podés hacer?, ¿por qué te interesa este puesto? No es improvisar: es prepararse y practicar.</p>
+            <p>Para autoevaluarte, usá estos criterios: <strong>Claridad</strong> (¿se entendió lo que dijiste?), <strong>Seguridad</strong> (¿lo dijiste con convicción?), <strong>Contenido</strong> (¿dijiste lo relevante?) y <strong>Tiempo</strong> (¿estuviste cerca de los 2 minutos?).</p>
+            <p>Al finalizar vas a escribir una <strong>carta de cierre</strong>: una reflexión personal sobre el año, lo que aprendiste y lo que te llevás. No es para un empleador — es para vos.</p>
+          </div>
+        </div>
+        <div class="seccion">
+          <div class="seccion-titulo">Tu actividad — Simulacro y cierre</div>
+          <div class="actividad">
+            <label class="campo-label">Esquema de tu presentación personal de 2 minutos</label>
+            <textarea class="campo" id="s12-esquema" placeholder="Punto 1: quién soy / Punto 2: qué sé hacer / Punto 3: por qué me interesa el área contable..."></textarea>
+            <label class="campo-label" style="margin-top:6px">Autoevaluación — marcá cómo te fue en cada criterio</label>
+            <div class="feedback-grid">
+              <div class="feedback-row" style="grid-template-columns:1fr 70px 70px 80px;font-size:11px;">
+                <span style="font-weight:600;color:var(--ink2)">Criterio</span>
+                <span style="text-align:center;font-weight:600;color:var(--ink2)">Bien</span>
+                <span style="text-align:center;font-weight:600;color:var(--ink2)">Regular</span>
+                <span style="text-align:center;font-weight:600;color:var(--ink2)">A mejorar</span>
+              </div>
+              <div class="feedback-row" style="grid-template-columns:1fr 70px 70px 80px">
+                <span class="criterio">Claridad del mensaje</span>
+                <label style="text-align:center"><input type="radio" name="fe1" value="Bien"> Bien</label>
+                <label style="text-align:center"><input type="radio" name="fe1" value="Regular"> Regular</label>
+                <label style="text-align:center"><input type="radio" name="fe1" value="A mejorar"> A mejorar</label>
+              </div>
+              <div class="feedback-row" style="grid-template-columns:1fr 70px 70px 80px">
+                <span class="criterio">Seguridad y postura</span>
+                <label style="text-align:center"><input type="radio" name="fe2" value="Bien"> Bien</label>
+                <label style="text-align:center"><input type="radio" name="fe2" value="Regular"> Regular</label>
+                <label style="text-align:center"><input type="radio" name="fe2" value="A mejorar"> A mejorar</label>
+              </div>
+              <div class="feedback-row" style="grid-template-columns:1fr 70px 70px 80px">
+                <span class="criterio">Contenido relevante</span>
+                <label style="text-align:center"><input type="radio" name="fe3" value="Bien"> Bien</label>
+                <label style="text-align:center"><input type="radio" name="fe3" value="Regular"> Regular</label>
+                <label style="text-align:center"><input type="radio" name="fe3" value="A mejorar"> A mejorar</label>
+              </div>
+              <div class="feedback-row" style="grid-template-columns:1fr 70px 70px 80px">
+                <span class="criterio">Tiempo (aprox. 2 min)</span>
+                <label style="text-align:center"><input type="radio" name="fe4" value="Bien"> Bien</label>
+                <label style="text-align:center"><input type="radio" name="fe4" value="Regular"> Regular</label>
+                <label style="text-align:center"><input type="radio" name="fe4" value="A mejorar"> A mejorar</label>
+              </div>
+            </div>
+            <label class="campo-label">Feedback que recibiste de tus compañeros (lo positivo y la sugerencia de mejora)</label>
+            <textarea class="campo" id="s12-feedback" placeholder="Lo que te dijeron..."></textarea>
+            <label class="campo-label">✉️ Carta de cierre — escribíla a tu yo del año que viene. ¿Qué aprendiste este año sobre el mundo del trabajo? ¿Qué te llevás?</label>
+            <textarea class="campo" id="s12-carta" style="min-height:180px" placeholder="Escribí con libertad — esto es solo tuyo..."></textarea>
+            <label class="campo-label">¿Cuál fue la sesión que más te marcó o te resultó más útil? ¿Por qué?</label>
+            <textarea class="campo" id="s12-sesion-top" placeholder="Tu respuesta..."></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="clase-footer">
+        <button class="btn-descargar" onclick="descargarSesion(12)">⬇ Descargar esta sesión</button>
+        <button class="btn-completar" onclick="marcarCompletada(12)">Marcar como completada ✓</button>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+const sesionesHome = [
+  {num:1,  color:'var(--b1)', titulo:'Autoconocimiento laboral',         producto:'Mapa de fortalezas'},
+  {num:2,  color:'var(--b1)', titulo:'Empleado, freelance, emprendedor', producto:'Cuadro comparativo'},
+  {num:3,  color:'var(--b1)', titulo:'Primer día de trabajo',            producto:'Checklist'},
+  {num:4,  color:'var(--b2)', titulo:'Comunicación profesional',         producto:'Correo redactado'},
+  {num:5,  color:'var(--b2)', titulo:'CV y carta de presentación',       producto:'Borrador de CV'},
+  {num:6,  color:'var(--b2)', titulo:'La entrevista de trabajo',          producto:'Respuestas + autoevaluación'},
+  {num:7,  color:'var(--b3)', titulo:'Derechos laborales',               producto:'Análisis de caso'},
+  {num:8,  color:'var(--b3)', titulo:'Tecnología contable',              producto:'Mapa de herramientas'},
+  {num:9,  color:'var(--b4)', titulo:'Equipos y conflictos',              producto:'Análisis de conflicto'},
+  {num:10, color:'var(--b4)', titulo:'El primer sueldo',                  producto:'Presupuesto simulado'},
+  {num:11, color:'var(--b5)', titulo:'Ética profesional',               producto:'Dilema ético'},
+  {num:12, color:'var(--b5)', titulo:'Simulacro de selección',           producto:'Presentación + carta'},
+];
+const herramientas = [
+  'Excel avanzado (fórmulas, tablas dinámicas)','Google Sheets','Sistema Tango','Sistema Bejerman',
+  'AFIP / ARCA — facturación electrónica','AFIP — Declaraciones juradas','ANSES (trámites online)',
+  'LinkedIn (perfil profesional)','Google Drive / Docs colaborativos','Notion / gestión de tareas',
+  'Videollamadas (Meet, Teams, Zoom)','Python (automatización básica)',
+];
+const titulos = {
+  1:'Sesión 1 — Autoconocimiento laboral',2:'Sesión 2 — Formas de trabajo',3:'Sesión 3 — Primer día',
+  4:'Sesión 4 — Comunicación profesional',5:'Sesión 5 — CV y carta de presentación',
+  6:'Sesión 6 — La entrevista de trabajo',7:'Sesión 7 — Derechos laborales',
+  8:'Sesión 8 — Tecnología contable',9:'Sesión 9 — Equipos y conflictos',
+  10:'Sesión 10 — El primer sueldo',11:'Sesión 11 — Ética profesional',12:'Sesión 12 — Simulacro de selección',
+};
+const etiquetas = {
+  's1-vision':'Trabajo imaginado en 5 años','s1-hard1':'Habilidad técnica 1','s1-hard2':'Habilidad técnica 2','s1-hard3':'Habilidad técnica 3',
+  's1-soft1':'Habilidad blanda 1','s1-soft2':'Habilidad blanda 2','s1-soft3':'Habilidad blanda 3',
+  's1-dev1':'Para desarrollar 1','s1-dev2':'Para desarrollar 2','s1-dev3':'Para desarrollar 3','s1-motivacion':'Motivación y entusiasmo',
+  's2-dep-pros':'Relación de dependencia — Ventajas','s2-dep-cons':'Relación de dependencia — Desventajas',
+  's2-free-pros':'Freelance — Ventajas','s2-free-cons':'Freelance — Desventajas',
+  's2-emp-pros':'Emprendimiento — Ventajas','s2-emp-cons':'Emprendimiento — Desventajas','s2-decision':'Mi decisión y razonamiento',
+  's3-reflexion':'Reflexión sobre el checklist','checks-s3':'Ítems marcados del checklist',
+  's4-situacion':'Situación elegida','s4-asunto':'Asunto del correo','s4-cuerpo':'Correo redactado','s4-reflexion':'Reflexión sobre la redacción',
+  's5-contacto':'Datos de contacto','s5-formacion':'Formación académica','s5-experiencia':'Experiencia laboral','s5-habilidades':'Habilidades técnicas','s5-extras':'Extras y certificaciones','s5-reflexion':'Reflexión sobre el CV',
+  's6-presentacion':'Presentación personal (2 min)','s6-fyd':'Fortalezas y debilidades','s6-porquevo':'¿Por qué contratarme? (STAR)','s6-5anios':'En 5 años','s6-autoevaluacion':'Autoevaluación del role-play',
+  's7-derechos':'Derechos vulnerados en el caso','s7-instituciones':'Organismos a los que recurrir','s7-opinion':'Mi opinión sobre el caso',
+  's8-urgentes':'Herramientas prioritarias a aprender','s8-conexion':'Conexión con Lógica y Programación','herramientas':'Evaluación de herramientas digitales',
+  's9-analisis':'Análisis del conflicto','s9-estilos':'Estilos de comunicación de cada personaje','s9-formula':'Reformulación asertiva',
+  's10-alquiler':'Alquiler / aporte familia','s10-transporte':'Transporte','s10-comida':'Comida','s10-servicios':'Servicios','s10-ropa':'Ropa y personal','s10-ocio':'Ocio y salidas','s10-ahorro':'Ahorro','s10-otros':'Otros','s10-reflexion':'Reflexión sobre el presupuesto',
+  's11-decision':'Mi decisión ante el dilema','s11-consecuencias':'Consecuencias de cada opción','s11-comunicacion':'Cómo comunicaría la negativa','s11-reflexion':'Legal, ético y conveniente',
+  's12-esquema':'Esquema de presentación personal','s12-feedback':'Feedback recibido de compañeros','s12-carta':'Carta de cierre del año','s12-sesion-top':'Sesión más útil del año',
+  'fe1':'Autoevaluación — Claridad','fe2':'Autoevaluación — Seguridad','fe3':'Autoevaluación — Contenido','fe4':'Autoevaluación — Tiempo',
+};
+function inicializar(){
+  const grid=document.getElementById('sesiones-home');
+  sesionesHome.forEach(s=>{
+    const div=document.createElement('div');
+    div.className='sesion-card-home';div.id=`home-s${s.num}`;div.onclick=()=>verClase(s.num);
+    div.innerHTML=`<div class="num-badge" style="background:${s.color}">${String(s.num).padStart(2,'0')}</div><h4>${s.titulo}</h4><p>📦 ${s.producto}</p><div class="progreso-bar"><div class="progreso-fill" id="prog-s${s.num}" style="background:${s.color};width:0%"></div></div>`;
+    grid.appendChild(div);
+  });
+  const tbody=document.getElementById('s8-tabla');
+  herramientas.forEach((h,i)=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${h}</td><td><label style="display:flex;align-items:center;gap:6px;justify-content:center"><input type="radio" name="h${i}" value="uso"> La uso bien</label></td><td><label style="display:flex;align-items:center;gap:6px;justify-content:center"><input type="radio" name="h${i}" value="conozco"> La conozco</label></td><td><label style="display:flex;align-items:center;gap:6px;justify-content:center"><input type="radio" name="h${i}" value="nueva"> No la conocía</label></td>`;
+    tbody.appendChild(tr);
+  });
+}
+function verHome(){document.querySelectorAll('.clase-card').forEach(c=>c.classList.remove('visible'));document.getElementById('home').classList.add('visible');document.querySelectorAll('.nav-clase').forEach(n=>n.classList.remove('active'));}
+function verClase(num){
+  document.querySelectorAll('.clase-card').forEach(c=>c.classList.remove('visible'));
+  const card=document.getElementById(`clase-${num}`);
+  if(card){card.classList.add('visible');card.scrollIntoView({behavior:'smooth',block:'start'});}
+  document.querySelectorAll('.nav-clase').forEach(n=>n.classList.remove('active'));
+  const nav=document.getElementById(`nav-${num}`);if(nav)nav.classList.add('active');
+  const nombre=document.getElementById('nombre-alumno').value;
+  if(nombre)document.getElementById('saludo-home').textContent=`Bienvenido/a, ${nombre}`;
+}
+function toggleSidebar(){document.getElementById('sidebar-nav').classList.toggle('open');}
+function selLikert(g,el){document.querySelectorAll(`#${g} .likert-opt`).forEach(o=>o.classList.remove('selected'));el.classList.add('selected');}
+function toggleCheck(cb){cb.closest('.check-item').classList.toggle('checked',cb.checked);}
+function marcarCompletada(num){
+  const nav=document.getElementById(`nav-${num}`);if(nav)nav.classList.add('completada');
+  const hi=document.getElementById(`home-s${num}`);if(hi)hi.classList.add('hecha');
+  const p=document.getElementById(`prog-s${num}`);if(p)p.style.width='100%';
+  const btn=document.querySelector(`#clase-${num} .btn-completar`);
+  if(btn){btn.textContent='✓ Completada';btn.style.background='#888';btn.disabled=true;}
+}
+function recolectarSesion(num){
+  const card=document.getElementById(`clase-${num}`);if(!card)return{};const datos={};
+  card.querySelectorAll('textarea[id]').forEach(el=>{if(el.value.trim())datos[el.id]=el.value.trim();});
+  card.querySelectorAll('input[id].campo-inline').forEach(el=>{if(el.value.trim())datos[el.id]=el.value.trim();});
+  card.querySelectorAll('.likert').forEach(group=>{const sel=group.querySelector('.selected');if(sel)datos[group.id]=sel.textContent.trim();});
+  card.querySelectorAll('.check-item.checked span').forEach(el=>{const key=`checks-s${num}`;if(!datos[key])datos[key]=[];datos[key].push(el.textContent.trim());});
+  card.querySelectorAll('input[type=radio]:checked').forEach(el=>{datos[el.name]=el.value;});
+  if(num===8){const ev={};herramientas.forEach((h,i)=>{const c=card.querySelector(`input[name="h${i}"]:checked`);if(c)ev[h]=c.value==='uso'?'La uso bien':c.value==='conozco'?'La conozco':'No la conocía';});if(Object.keys(ev).length)datos['herramientas']=ev;}
+  return datos;
+}
+function _txt(datos){
+  let t='';
+  for(const[k,v]of Object.entries(datos)){
+    const label=etiquetas[k]||k;
+    if(typeof v==='object'&&!Array.isArray(v)){t+=`${label}:\n`;for(const[sk,sv]of Object.entries(v))t+=`  · ${sk}: ${sv}\n`;t+='\n';}
+    else if(Array.isArray(v)){t+=`${label}:\n  · ${v.join('\n  · ')}\n\n`;}
+    else{t+=`${label}:\n${v}\n\n`;}
+  }
+  return t;
+}
+function descargarSesion(num){
+  const nombre=document.getElementById('nombre-alumno').value.trim()||'Alumno';
+  const fecha=new Date().toLocaleDateString('es-AR');
+  const datos=recolectarSesion(num);
+  let txt=`TUTORÍA LABORAL — 5° AÑO\n${titulos[num]}\nAlumno/a: ${nombre}\nFecha: ${fecha}\n${"=".repeat(50)}\n\n`;
+  txt+=_txt(datos);
+  if(!Object.keys(datos).length)txt+='(Esta sesión no tiene actividades completadas todavía)\n';
+  const blob=new Blob([txt],{type:'text/plain;charset=utf-8'});
+  const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;
+  a.download=`tutoria5to-sesion${num}-${nombre.replace(/\s+/g,'-').toLowerCase()}.txt`;a.click();URL.revokeObjectURL(url);
+}
+function guardarTrabajo(){
+  const nombre=document.getElementById('nombre-alumno').value.trim()||'Alumno';
+  const fecha=new Date().toLocaleDateString('es-AR');
+  let txt=`PORTFOLIO COMPLETO — TUTORÍA LABORAL 5° AÑO\nAlumno/a: ${nombre}\nFecha: ${fecha}\n${"=".repeat(55)}\n`;
+  for(let i=1;i<=12;i++){const datos=recolectarSesion(i);if(!Object.keys(datos).length)continue;txt+=`\n${"─".repeat(50)}\n${titulos[i]}\n${"─".repeat(50)}\n\n`;txt+=_txt(datos);}
+  const blob=new Blob([txt],{type:'text/plain;charset=utf-8'});
+  const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;
+  a.download=`portfolio-tutoria5to-${nombre.replace(/\s+/g,'-').toLowerCase()}.txt`;a.click();URL.revokeObjectURL(url);
+}
+document.getElementById('nombre-alumno').addEventListener('input',function(){
+  document.getElementById('saludo-home').textContent=this.value?`Bienvenido/a, ${this.value}`:'Bienvenido/a a Tutoría Laboral';
+});
+inicializar();verHome();
+</script>
+</body>
+</html>
