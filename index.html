@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PAT 5° Año — Ingreso al Mundo Laboral</title>
+<title>Tutoría 5° Año — Ingreso al Mundo Laboral</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,900;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -177,6 +177,86 @@
 
   .sidebar-toggle { display: none; background: var(--accent); color: white; border: none; border-radius: 8px; padding: 10px 16px; font-family: 'DM Sans', sans-serif; font-size: 13px; cursor: pointer; margin-bottom: 16px; width: 100%; }
 
+
+  .rubro-selector {
+    background: linear-gradient(135deg, #0f1f2e 0%, #1a3a52 100%);
+    border-radius: 14px;
+    padding: 24px 28px;
+    margin-bottom: 24px;
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+  .rubro-selector::before { content: '✦'; position: absolute; right: 24px; top: 16px; font-size: 48px; opacity: .08; }
+  .rubro-selector h3 { font-family: 'Fraunces', serif; font-size: 1.2rem; font-weight: 600; margin-bottom: 8px; }
+  .rubro-selector p { font-size: 13px; color: rgba(255,255,255,.65); margin-bottom: 16px; line-height: 1.5; }
+  .rubro-input-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .rubro-input {
+    flex: 1; min-width: 200px;
+    border: 1.5px solid rgba(255,255,255,.25);
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    background: rgba(255,255,255,.1);
+    color: white;
+    transition: border .2s;
+  }
+  .rubro-input::placeholder { color: rgba(255,255,255,.4); }
+  .rubro-input:focus { outline: none; border-color: var(--accent3); }
+  .rubro-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--accent3); color: var(--ink);
+    border-radius: 20px; padding: 6px 14px;
+    font-size: 13px; font-weight: 600;
+    margin-top: 8px;
+  }
+  .rubro-badge .rubro-edit { cursor: pointer; font-size: 11px; opacity: .7; margin-left: 4px; }
+  .rubro-badge .rubro-edit:hover { opacity: 1; }
+  .btn-rubro { background: var(--accent3); color: var(--ink); border: none; border-radius: 8px; padding: 10px 20px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: all .2s; white-space: nowrap; }
+  .btn-rubro:hover { background: #d4911a; }
+  .rubro-sugerencias { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .rubro-chip { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); border-radius: 16px; padding: 4px 12px; font-size: 12px; color: rgba(255,255,255,.8); cursor: pointer; transition: all .15s; }
+  .rubro-chip:hover { background: rgba(255,255,255,.2); color: white; }
+
+  /* Trayectoria selector */
+  .trayectoria-selector {
+    background: rgba(255,255,255,.06);
+    border: 1.5px solid rgba(255,255,255,.15);
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-top: 16px;
+  }
+  .trayectoria-selector p {
+    font-size: 13px;
+    color: rgba(255,255,255,.7);
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+  .tray-opciones { display: flex; gap: 8px; flex-wrap: wrap; }
+  .tray-btn {
+    flex: 1; min-width: 140px;
+    background: rgba(255,255,255,.08);
+    border: 1.5px solid rgba(255,255,255,.18);
+    border-radius: 10px;
+    padding: 12px 14px;
+    color: rgba(255,255,255,.8);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: center;
+    line-height: 1.4;
+    transition: all .2s;
+  }
+  .tray-btn:hover { background: rgba(255,255,255,.15); color: white; border-color: var(--accent3); }
+  .tray-btn.selected { background: var(--accent3); color: var(--ink); border-color: var(--accent3); font-weight: 600; }
+  .tray-tag { color: #7dd3b0; font-weight: 600; }
+
+  /* Rubro highlight in labels */
+  .rubro-tag { color: var(--accent3); font-weight: 600; }
+  .rubro-pending { color: var(--accent3); font-style: italic; }
+
   @media (max-width: 768px) {
     .main { grid-template-columns: 1fr; padding: 20px 16px; }
     .sidebar { position: static; }
@@ -193,7 +273,7 @@
 
 <header>
   <div class="header-inner">
-    <div class="header-tag">PAT Laboral · 5° Año Secundaria · Orientación Contabilidad · 2026</div>
+    <div class="header-tag">Tutoría Laboral · 5° Año Secundaria · 2025</div>
     <h1>Ingreso al<br><em>mundo laboral</em></h1>
     <p class="header-sub">Todo lo que necesitás saber antes de tu primer trabajo</p>
   </div>
@@ -202,6 +282,7 @@
 <div class="alumno-bar" style="max-width:1100px;margin:0 auto;">
   <label for="nombre-alumno">Tu nombre:</label>
   <input type="text" id="nombre-alumno" placeholder="Escribí tu nombre y apellido..." autocomplete="off">
+  <span id="rubro-display-bar" style="font-size:12px;font-weight:600;color:var(--accent);background:var(--bg2);padding:6px 14px;border-radius:20px;white-space:nowrap;display:none" id="rubro-display-bar"></span>
   <button class="btn-save" onclick="guardarTrabajo()">⬇ Guardar mi portfolio</button>
 </div>
 
@@ -231,7 +312,7 @@
       <div class="bloque-nav">
         <div class="bloque-nav-header"><span class="bloque-dot" style="background:var(--b3)"></span>Derechos y tecnología</div>
         <a class="nav-clase" onclick="verClase(7)" id="nav-7">Sesión 7 · Derechos laborales</a>
-        <a class="nav-clase" onclick="verClase(8)" id="nav-8">Sesión 8 · Tecnología contable</a>
+        <a class="nav-clase" onclick="verClase(8)" id="nav-8">Sesión 8 · Tecnología en tu rubro</a>
       </div>
       <div class="bloque-nav">
         <div class="bloque-nav-header"><span class="bloque-dot" style="background:var(--b4)"></span>Trabajo y finanzas</div>
@@ -251,7 +332,7 @@
     <!-- HOME -->
     <div class="clase-card visible" id="home">
       <div class="home-bienvenida">
-        <h2 id="saludo-home">Bienvenido/a </h2>
+        <h2 id="saludo-home">Bienvenido/a a Tutoría Laboral</h2>
         <p>Este es tu portfolio de preparación para el mundo del trabajo. En cada sesión vas a encontrar una introducción al tema, una explicación y una actividad para completar. Al terminar, podés descargar tu trabajo y entregarlo en Classroom.</p>
       </div>
       <div class="sesiones-grid" id="sesiones-home"></div>
@@ -268,7 +349,46 @@
           <div class="clase-producto">📦 Entregable: Mapa personal de fortalezas</div>
         </div>
       </div>
-      <div class="clase-body">
+            <div class="clase-body">
+        <div class="seccion">
+          <div class="seccion-titulo">Tu rubro — el centro de todo este año</div>
+          <div class="rubro-selector" id="rubro-selector-s1">
+            <h3>¿En qué rubro te imaginás trabajando?</h3>
+            <p>Todo lo que hagamos este año — el CV, la entrevista, los dilemas éticos, la tecnología — lo vas a trabajar desde tu propio rubro de interés. No importa si todavía no estás seguro/a: podés cambiarlo cuando quieras. Lo que importa es que el trabajo sea tuyo.</p>
+            <div class="rubro-input-row">
+              <input type="text" class="rubro-input" id="rubro-input-main" placeholder="Ej: tecnología, salud, música, mecánica, deportes...">
+              <button class="btn-rubro" onclick="guardarRubro()">Confirmar rubro →</button>
+            </div>
+            <div class="rubro-sugerencias">
+              <span class="rubro-chip" onclick="setRubroChip(this)">💻 Tecnología</span>
+              <span class="rubro-chip" onclick="setRubroChip(this)">🏥 Salud</span>
+              <span class="rubro-chip" onclick="setRubroChip(this)">🎨 Arte y diseño</span>
+              <span class="rubro-chip" onclick="setRubroChip(this)">⚽ Deporte</span>
+              <span class="rubro-chip" onclick="setRubroChip(this)">🔧 Mecánica</span>
+              <span class="rubro-chip" onclick="setRubroChip(this)">🍳 Gastronomía</span>
+              <span class="rubro-chip" onclick="setRubroChip(this)">🎭 Comunicación</span>
+              <span class="rubro-chip" onclick="setRubroChip(this)">⚖️ Derecho</span>
+              <span class="rubro-chip" onclick="setRubroChip(this)">🏗️ Construcción</span>
+              <span class="rubro-chip" onclick="setRubroChip(this)">✈️ Turismo</span>
+              <span class="rubro-chip" onclick="setRubroChip(this)">🌱 Medio ambiente</span>
+              <span class="rubro-chip" onclick="setRubroChip(this)">🎓 Educación</span>
+              <span class="rubro-chip" onclick="setRubroChip(this)">💅 Estética</span>
+            </div>
+            <div id="trayectoria-selector" style="display:none">
+              <div class="trayectoria-selector">
+                <p>¿Cuál es tu trayectoria pensada?</p>
+                <div class="tray-opciones">
+                  <button class="tray-btn" onclick="elegirTrayectoria('empleo', this)">👔 Buscar empleo<br><span style="font-weight:400;opacity:.8">Quiero trabajar para alguien</span></button>
+                  <button class="tray-btn" onclick="elegirTrayectoria('emprender', this)">🚀 Emprender directo<br><span style="font-weight:400;opacity:.8">Quiero mi propio negocio</span></button>
+                  <button class="tray-btn" onclick="elegirTrayectoria('ambos', this)">📈 Primero empleo,<br>después emprender<br><span style="font-weight:400;opacity:.8">Las dos etapas</span></button>
+                </div>
+              </div>
+            </div>
+            <div id="rubro-confirmado" style="display:none;margin-top:14px">
+              <div class="rubro-badge">✦ Tu rubro: <span id="rubro-badge-text"></span> · <span class="tray-tag" id="tray-badge-text"></span> <span class="rubro-edit" onclick="editarRubro()">✎ cambiar</span></div>
+            </div>
+          </div>
+        </div>
         <div class="seccion">
           <div class="seccion-titulo">Para leer antes de la actividad</div>
           <div class="intro-tema">
@@ -277,40 +397,39 @@
             <p>Para esto es útil distinguir dos tipos de habilidades:</p>
             <div class="concepto-box">
               <strong>Habilidades duras (hard skills)</strong>
-              Son técnicas y medibles: saber usar Excel, conocer los sistemas contables, manejar AFIP, hablar inglés. Se aprenden en cursos, en la escuela o trabajando.
+              Son técnicas y medibles: saber programar, conocer herramientas de diseño, manejar equipos, hablar inglés. Se aprenden en cursos, en la escuela o trabajando.
             </div>
             <div class="concepto-box">
               <strong>Habilidades blandas (soft skills)</strong>
-              Son actitudes y formas de relacionarse: comunicarte bien, trabajar en equipo, ser puntual, adaptarte a cambios, resolver problemas. No se aprenden en un curso, se desarrollan con la experiencia.
+              Son actitudes y formas de relacionarse: comunicarte bien, trabajar en equipo, ser puntual, adaptarte a cambios. No se aprenden en un curso: se desarrollan con la experiencia.
             </div>
-            <p>En el mercado laboral de hoy, las empresas buscan las dos. Y en muchos casos, las habilidades blandas terminan siendo las que definen si alguien crece o no dentro de una organización.</p>
-            <p>En esta sesión vas a construir tu propio mapa de fortalezas: qué sabés hacer, qué actitudes tenés y qué querés desarrollar. No hay respuestas correctas ni incorrectas — solo respuestas honestas.</p>
+            <p>En esta sesión vas a construir tu mapa de fortalezas pensando específicamente en <strong class="rubro-tag" id="intro-rubro-s1">tu rubro</strong>. No hay respuestas correctas — solo respuestas honestas.</p>
           </div>
         </div>
         <div class="seccion">
           <div class="seccion-titulo">Tu actividad — Mapa de Fortalezas</div>
           <div class="actividad">
-            <div class="info-box"><strong>📝 Instrucción:</strong> Completá cada campo con honestidad. Esto va a ser parte de tu portfolio de ingreso al mundo laboral, así que cuanto más real, más útil te va a resultar.</div>
-            <label class="campo-label">¿Qué trabajo te imaginás teniendo en 5 años? Describilo con la mayor precisión posible (área, tipo de empresa, rol).</label>
-            <textarea class="campo" id="s1-vision" placeholder="Ejemplo: trabajar en el área contable de una empresa mediana, o tener mi propio estudio con clientes..."></textarea>
-            <label class="campo-label">Mis 3 habilidades técnicas más fuertes (contables, digitales, de idiomas, etc.)</label>
+            <div class="info-box"><strong>📝 Instrucción:</strong> Respondé cada campo pensando en <strong id="act-rubro-s1" class="rubro-tag">tu rubro de interés</strong> y tu trayectoria (<span class="tray-tag" data-tray="true">tu camino elegido</span>). Si todavía no los confirmaste arriba, hacelo primero.</div>
+            <label class="campo-label" id="lbl-s1-vision">¿Qué trabajo te imaginás teniendo en 5 años dentro de <span class="rubro-tag" data-rubro="true">tu rubro</span>? Describí el rol, el tipo de empresa o contexto.</label>
+            <textarea class="campo" id="s1-vision" placeholder="Ser específico/a ayuda más que ser vago..."></textarea>
+            <label class="campo-label">Mis 3 habilidades técnicas más relevantes para <span class="rubro-tag" data-rubro="true">tu rubro</span></label>
             <input class="campo-inline" id="s1-hard1" placeholder="Habilidad técnica 1...">
             <input class="campo-inline" id="s1-hard2" placeholder="Habilidad técnica 2...">
             <input class="campo-inline" id="s1-hard3" placeholder="Habilidad técnica 3...">
-            <label class="campo-label" style="margin-top:4px">Mis 3 habilidades blandas más fuertes (cómo me relaciono, cómo trabajo, actitudes)</label>
+            <label class="campo-label" style="margin-top:4px">Mis 3 habilidades blandas más fuertes</label>
             <input class="campo-inline" id="s1-soft1" placeholder="Habilidad blanda 1...">
             <input class="campo-inline" id="s1-soft2" placeholder="Habilidad blanda 2...">
             <input class="campo-inline" id="s1-soft3" placeholder="Habilidad blanda 3...">
-            <label class="campo-label" style="margin-top:4px">3 cosas que quiero aprender o mejorar antes de buscar trabajo</label>
+            <label class="campo-label" style="margin-top:4px">3 cosas que quiero aprender antes de buscar trabajo en <span class="rubro-tag" data-rubro="true">tu rubro</span></label>
             <input class="campo-inline" id="s1-dev1" placeholder="Quiero mejorar/aprender...">
             <input class="campo-inline" id="s1-dev2" placeholder="Quiero mejorar/aprender...">
             <input class="campo-inline" id="s1-dev3" placeholder="Quiero mejorar/aprender...">
-            <label class="campo-label" style="margin-top:4px">¿Qué es lo que más te gusta del área contable? ¿Qué parte del trabajo futuro te genera más entusiasmo?</label>
+            <label class="campo-label" style="margin-top:4px">¿Qué es lo que más te atrae de <span class="rubro-tag" data-rubro="true">tu rubro</span>? ¿Qué parte del trabajo futuro te genera más entusiasmo?</label>
             <textarea class="campo" id="s1-motivacion" placeholder="Sé honesto/a — puede ser algo muy concreto o algo difuso todavía..."></textarea>
           </div>
         </div>
       </div>
-      <div class="clase-footer">
+<div class="clase-footer">
         <button class="btn-descargar" onclick="descargarSesion(1)">⬇ Descargar esta sesión</button>
         <button class="btn-completar" onclick="marcarCompletada(1)">Marcar como completada ✓</button>
       </div>
@@ -332,7 +451,7 @@
           <div class="seccion-titulo">Para leer antes de la actividad</div>
           <div class="intro-tema">
             <h3>Tres formas de trabajar — ninguna es la "correcta"</h3>
-            <p>Cuando pensamos en trabajar, casi siempre imaginamos lo mismo: conseguir empleo en una empresa. Pero el mundo laboral de hoy tiene al menos tres caminos distintos, y en el área contable los tres son posibles.</p>
+            <p>Cuando pensamos en trabajar, casi siempre imaginamos lo mismo: conseguir empleo en una empresa. Pero el mundo laboral de hoy tiene al menos tres caminos distintos, y en casi cualquier rubro los tres son posibles.</p>
             <div class="concepto-box">
               <strong>Relación de dependencia (empleado)</strong>
               Trabajás para una empresa o persona. Tenés sueldo fijo, obra social, vacaciones pagas, aguinaldo y aportes jubilatorios. A cambio, tenés horarios y dependés de decisiones de otros.
@@ -343,7 +462,7 @@
             </div>
             <div class="concepto-box">
               <strong>Emprendimiento / Estudio propio</strong>
-              Montás tu propio negocio o estudio contable. Es el mayor nivel de independencia, pero también implica más responsabilidades: conseguir clientes, administrar el dinero y, muchas veces, trabajar más que en relación de dependencia al principio.
+              Montás tu propio negocio o proyecto. Es el mayor nivel de independencia, pero también implica más responsabilidades: conseguir clientes, administrar el dinero y, muchas veces, trabajar más que en relación de dependencia al principio.
             </div>
             <p>No existe una opción mejor en términos absolutos. Depende de tu personalidad, tu situación económica, tus metas y cuánto riesgo estás dispuesto a asumir. Lo importante es elegir con información, no por descarte o porque "todos lo hacen".</p>
           </div>
@@ -391,7 +510,7 @@
             <p>Hay cosas que podés preparar antes de entrar:</p>
             <ul>
               <li><strong>Confirmá el horario</strong> el día anterior. No asumas que es el mismo que te dijeron en la entrevista.</li>
-              <li><strong>Averiguá el código de vestimenta.</strong> En un estudio contable suele ser formal o semi-formal. Si no sabés, preguntá — es mejor preguntar que aparecer mal vestido.</li>
+              <li><strong>Averiguá el código de vestimenta.</strong> Dependiendo del rubro, puede ser formal, semi-formal o casual. Si no sabés, preguntá — es mejor preguntar que aparecer mal vestido.</li>
               <li><strong>Llevá tu documentación lista:</strong> DNI, CUIL, y una cuenta bancaria para el pago del sueldo.</li>
             </ul>
             <p>Y hay actitudes que hacen una gran diferencia durante el primer día:</p>
@@ -523,11 +642,11 @@
             <textarea class="campo" id="s5-formacion" style="min-height:70px" placeholder="Institución · Título · Año de egreso (o egreso previsto)..."></textarea>
             <label class="campo-label">💼 Experiencia laboral (incluí trabajos informales, temporales, ayudas familiares — todo vale)</label>
             <textarea class="campo" id="s5-experiencia" placeholder="Empresa o lugar · Tareas que hacías · Período de tiempo..."></textarea>
-            <label class="campo-label">⚙️ Habilidades técnicas y herramientas</label>
-            <textarea class="campo" id="s5-habilidades" style="min-height:70px" placeholder="Excel, AFIP, sistemas contables, idiomas, herramientas digitales..."></textarea>
+            <label class="campo-label">⚙️ Habilidades técnicas y herramientas relevantes para <span class="rubro-tag" data-rubro="true">tu rubro</span></label>
+            <textarea class="campo" id="s5-habilidades" style="min-height:70px" placeholder="Herramientas, programas, habilidades técnicas propias de tu rubro..."></textarea>
             <label class="campo-label">✨ Extras (cursos, voluntariado, certificaciones, logros escolares)</label>
             <textarea class="campo" id="s5-extras" style="min-height:70px" placeholder="Cursos, reconocimientos, actividades extracurriculares..."></textarea>
-            <label class="campo-label">¿Qué sección te resultó más difícil de completar? ¿Qué te dice eso sobre lo que tenés que trabajar?</label>
+            <label class="campo-label">¿Qué sección te resultó más difícil de completar? ¿Qué te dice eso sobre lo que tenés que trabajar? Tené en cuenta tu trayectoria (<span class="tray-tag" data-tray="true">tu camino elegido</span>): si vas a emprender, ¿qué seción sería un portafolio de clientes en lugar de experiencia laboral?</label>
             <textarea class="campo" id="s5-reflexion" placeholder="Tu reflexión..."></textarea>
           </div>
         </div>
@@ -549,40 +668,57 @@
           <div class="clase-producto">📦 Entregable: Respuestas preparadas + autoevaluación</div>
         </div>
       </div>
-      <div class="clase-body">
+            <div class="clase-body">
         <div class="seccion">
           <div class="seccion-titulo">Para leer antes de la actividad</div>
           <div class="intro-tema">
-            <h3>Cómo prepararte para una entrevista</h3>
-            <p>La mayoría de las personas va a una entrevista esperando "ver qué pasa". Las que se preparan tienen una ventaja enorme, porque las preguntas más frecuentes son bastante predecibles.</p>
-            <p>Las preguntas más comunes son: "Contame de vos", "¿Cuáles son tus fortalezas y debilidades?", "¿Por qué querés trabajar acá?", "¿Dónde te ves en 5 años?" y "¿Por qué deberíamos contratarte?". Ninguna de estas tiene una respuesta mágica, pero todas se pueden preparar con honestidad.</p>
+            <h3>Presentarte profesionalmente — entrevista o primer cliente</h3>
+            <p>Saber presentarte es una habilidad clave sin importar tu trayectoria. Pero la forma cambia según tu camino: quien busca empleo necesita convencer a un empleador; quien va a emprender necesita convencer a un cliente. En ambos casos, la pregunta de fondo es la misma: <em>¿por qué elegirte a vos?</em></p>
+            <p>Esta sesión está adaptada a tu trayectoria. Si elegiste buscar empleo o las dos etapas, vas a trabajar la entrevista. Si elegiste emprender directo, vas a trabajar cómo conseguir tus primeros clientes.</p>
             <div class="concepto-box">
-              <strong>Método STAR para responder preguntas de situación</strong>
-              Cuando te preguntan "contame una vez que..." la mejor forma de responder es: <strong>S</strong>ituación (contexto) → <strong>T</strong>area (qué tenías que hacer) → <strong>A</strong>cción (qué hiciste vos) → <strong>R</strong>esultado (qué pasó). Es claro, concreto y demuestra que sabés contar lo que hacés.
+              <strong>Lo que tienen en común</strong>
+              En una entrevista o con un cliente, lo que importa no es memorizar un guión. Es poder contar quién sos, qué sabés hacer y por qué eso le sirve a quien tenés enfrente — con claridad, sin nerviosismo paralizante y siendo genuino/a.
             </div>
-            <p><strong>El lenguaje corporal también comunica.</strong> Contacto visual, postura erguida, hablar a un ritmo moderado y evitar los "ehhh" y "tipo" dan una imagen de seguridad, aunque no te sientas seguro por dentro.</p>
-            <p><strong>En entrevistas virtuales</strong> hay que cuidar el fondo (que sea prolijo), el audio, la conexión y la puntualidad digital — entrar a la videollamada 2-3 minutos antes.</p>
-            <p>Al final de la entrevista, casi siempre te preguntan si tenés preguntas. Siempre respondé que sí y tené una o dos preparadas: sobre las tareas del puesto, el equipo o las posibilidades de crecimiento. Lo que <em>no</em> hay que preguntar en la primera entrevista es el sueldo.</p>
           </div>
         </div>
         <div class="seccion">
-          <div class="seccion-titulo">Tu actividad — Preparación para la entrevista</div>
+          <div class="seccion-titulo">Tu actividad</div>
           <div class="actividad">
-            <div class="info-box"><strong>📝 Instrucción:</strong> Respondé estas preguntas como si fuera una entrevista real. Sé específico/a y usá el método STAR cuando aplique. Después completá tu autoevaluación del role-play de clase.</div>
-            <label class="campo-label">1. "Contame de vos en 2 minutos." — Redactá tu presentación personal.</label>
-            <textarea class="campo" id="s6-presentacion" placeholder="Empezá con tu nombre, tu formación y algo relevante sobre vos. No más de 4-5 oraciones..."></textarea>
-            <label class="campo-label">2. "¿Cuáles son tus fortalezas y tus debilidades?" — Evitá las respuestas de manual ("soy muy perfeccionista"). Sé honesto/a.</label>
-            <textarea class="campo" id="s6-fyd" placeholder="Fortalezas: ... / Debilidades reales y cómo las estás trabajando: ..."></textarea>
-            <label class="campo-label">3. "¿Por qué deberíamos contratarte?" — Usá el método STAR si podés apoyarte en un ejemplo real.</label>
-            <textarea class="campo" id="s6-porquevo" placeholder="Situación / Tarea / Acción que tomé / Resultado que obtuve..."></textarea>
-            <label class="campo-label">4. "¿Dónde te ves en 5 años?"</label>
-            <textarea class="campo" id="s6-5anios" placeholder="Tu respuesta honesta — no hace falta que sea grandiosa, sí que sea tuya..."></textarea>
-            <label class="campo-label">Autoevaluación del role-play de clase: ¿qué te salió bien y qué mejorarías?</label>
-            <textarea class="campo" id="s6-autoevaluacion" placeholder="Sé específico/a — qué parte te costó más (el nerviosismo, las palabras, el tono, el contenido)..."></textarea>
+
+            <!-- VERSIÓN EMPLEO (empleo + ambos) -->
+            <div id="s6-version-empleo">
+              <div class="info-box"><strong>📝 Tu trayectoria es <span class="tray-tag" data-tray="true">tu camino</span>:</strong> trabajás la entrevista de trabajo.</div>
+              <label class="campo-label">1. "Contame de vos en 2 minutos." — Redactá tu presentación pensando en un empleador de <span class="rubro-tag" data-rubro="true">tu rubro</span>.</label>
+              <textarea class="campo" id="s6-presentacion" placeholder="Empezá con tu nombre, tu formación y algo relevante sobre vos..."></textarea>
+              <label class="campo-label">2. "¿Cuáles son tus fortalezas y debilidades?" — Sin respuestas de manual. Sé honesto/a.</label>
+              <textarea class="campo" id="s6-fyd" placeholder="Fortalezas reales: ... / Debilidades reales y cómo las estás trabajando: ..."></textarea>
+              <label class="campo-label">3. "¿Por qué deberíamos contratarte?" — Usá el método STAR si podés.</label>
+              <textarea class="campo" id="s6-porquevo" placeholder="Situación / Tarea / Acción / Resultado..."></textarea>
+              <label class="campo-label">4. "¿Dónde te ves en 5 años?" — Respondé con tu trayectoria real en mente.</label>
+              <textarea class="campo" id="s6-5anios" placeholder="Tu respuesta honesta, incluyendo si planeás emprender más adelante..."></textarea>
+              <label class="campo-label">Autoevaluación del role-play: ¿qué te salió bien y qué mejorarías?</label>
+              <textarea class="campo" id="s6-autoevaluacion" placeholder="Sé específico/a..."></textarea>
+            </div>
+
+            <!-- VERSIÓN EMPRENDIMIENTO -->
+            <div id="s6-version-emprender" style="display:none">
+              <div class="info-box"><strong>📝 Tu trayectoria es <span class="tray-tag" data-tray="true">tu camino</span>:</strong> trabajás cómo conseguir tus primeros clientes en <span class="rubro-tag" data-rubro="true">tu rubro</span>.</div>
+              <label class="campo-label">1. ¿Cómo te presentarías ante un potencial cliente en 2 minutos? Redactá exactamente lo que dirías — quién sos, qué ofrecés y por qué elegiría trabajar con vos.</label>
+              <textarea class="campo" id="s6-pitch" placeholder="Mi nombre es... / Lo que ofrezco es... / La razón para elegirme es..."></textarea>
+              <label class="campo-label">2. ¿Dónde vas a conseguir tus primeros clientes? Pensá en canales concretos: redes sociales, boca a boca, tu barrio, conocidos. ¿Cuál es más realista para empezar?</label>
+              <textarea class="campo" id="s6-clientes" placeholder="Canal 1: ... / Canal 2: ... / Por cuál empezaría: ..."></textarea>
+              <label class="campo-label">3. ¿Cuál es tu propuesta de valor? ¿Qué te diferencia de alguien que hace lo mismo en tu zona? No vale "soy bueno/a" — tiene que ser algo concreto y específico.</label>
+              <textarea class="campo" id="s6-diferencial" placeholder="Lo que me diferencia es..."></textarea>
+              <label class="campo-label">4. ¿Qué objeción te haría un potencial cliente para no contratarte? ¿Cómo la responderías?</label>
+              <textarea class="campo" id="s6-objecion" placeholder="Objeción probable: ... / Mi respuesta: ..."></textarea>
+              <label class="campo-label">¿Qué fue lo más difícil de pensar en esta actividad? ¿Qué te reveló sobre lo que todavía tenés que desarrollar?</label>
+              <textarea class="campo" id="s6-reflexion-emp" placeholder="Tu reflexión..."></textarea>
+            </div>
+
           </div>
         </div>
       </div>
-      <div class="clase-footer">
+<div class="clase-footer">
         <button class="btn-descargar" onclick="descargarSesion(6)">⬇ Descargar esta sesión</button>
         <button class="btn-completar" onclick="marcarCompletada(6)">Marcar como completada ✓</button>
       </div>
@@ -623,7 +759,7 @@
         <div class="seccion">
           <div class="seccion-titulo">Tu actividad — Análisis de caso</div>
           <div class="actividad">
-            <div class="caso-box"><strong>Caso:</strong> Martina (19 años) empezó a trabajar en un estudio contable hace 3 meses. Trabaja 6 horas diarias de lunes a viernes. Le pagan en efectivo. Nunca firmó ningún contrato. No tiene obra social. Cuando se enfermó 3 días, no le pagaron esos días y le dijeron que si faltaba mucho "no iba a poder seguir". Martina necesita el trabajo.</div>
+            <div class="caso-box"><strong>Caso:</strong> Martina (19 años) empezó a trabajar hace 3 meses. Trabaja 6 horas diarias de lunes a viernes. Le pagan en efectivo. Nunca firmó ningún contrato. No tiene obra social. Cuando se enfermó 3 días, no le pagaron esos días y le dijeron que si faltaba mucho "no iba a poder seguir". Martina necesita el trabajo.</div>
             <label class="campo-label">¿Qué derechos laborales no se están respetando en este caso? Nombrá al menos tres.</label>
             <textarea class="campo" id="s7-derechos" placeholder="Derecho 1: ... / Derecho 2: ... / Derecho 3: ..."></textarea>
             <label class="campo-label">¿A qué organismos podría recurrir Martina? ¿Para qué sirve cada uno en este caso concreto?</label>
@@ -645,47 +781,43 @@
         <div class="clase-num">08</div>
         <div class="clase-meta">
           <span class="clase-bloque-tag" style="background:var(--b3)">Derechos y tecnología</span>
-          <div class="clase-titulo">La tecnología en el trabajo contable</div>
-          <div class="clase-desc">Quien sabe manejar bien la tecnología contable tiene ventaja en el mercado laboral. ¿Qué te falta aprender?</div>
+          <div class="clase-titulo">La tecnología en tu rubro</div>
+          <div class="clase-desc">Quien sabe qué herramientas digitales existen en su sector tiene una ventaja real. ¿Qué te falta aprender?</div>
           <div class="clase-producto">📦 Entregable: Mapa de herramientas digitales</div>
         </div>
       </div>
-      <div class="clase-body">
+            <div class="clase-body">
         <div class="seccion">
           <div class="seccion-titulo">Para leer antes de la actividad</div>
           <div class="intro-tema">
-            <h3>El trabajo contable hoy: menos papel, más pantalla</h3>
-            <p>La contabilidad cambió mucho en los últimos años. Muchas tareas que antes se hacían a mano o en papel hoy están automatizadas o digitalizadas. Esto tiene dos consecuencias: hay menos trabajo manual repetitivo, y hay más demanda de personas que saben manejar esas herramientas.</p>
-            <p><strong>Las herramientas que más piden los empleadores del sector contable hoy son:</strong></p>
-            <ul>
-              <li><strong>Excel avanzado</strong> (fórmulas, tablas dinámicas, BUSCARV) — sigue siendo la herramienta más pedida en cualquier puesto administrativo o contable</li>
-              <li><strong>Sistemas de gestión contable</strong> como Tango o Bejerman — muy usados en estudios y empresas medianas</li>
-              <li><strong>AFIP / ARCA online</strong> — facturación electrónica, presentación de declaraciones juradas, consultas de CUIT</li>
-              <li><strong>Google Drive y herramientas colaborativas</strong> — cada vez más empresas trabajan en la nube</li>
-              <li><strong>LinkedIn</strong> — no es solo para buscar trabajo; también es donde los empleadores te buscan a vos</li>
-            </ul>
+            <h3>La tecnología en <span class="rubro-tag" data-rubro="true">tu rubro</span>: lo que ya existe y lo que viene</h3>
+            <p>Casi todos los rubros cambiaron radicalmente en los últimos 10 años por la tecnología. Y los que todavía no cambiaron, están cambiando ahora. Quien entiende qué herramientas digitales existen en su sector y sabe usarlas tiene una ventaja enorme sobre quien llega sin eso.</p>
+            <p>La pregunta no es si la tecnología va a afectar <span class="rubro-tag" data-rubro="true">tu rubro</span> — esa pregunta ya tiene respuesta. La pregunta es: ¿vas a ser de los que se quedaron atrás o de los que se adaptaron?</p>
             <div class="concepto-box">
-              <strong>La conexión con programación</strong>
-              Python, el lenguaje que ves en Lógica y Programación, se usa cada vez más en contabilidad para automatizar tareas repetitivas: generar reportes, procesar planillas, controlar stock. No hace falta ser programador/a, pero entender la lógica te da una ventaja real frente a candidatos que no la tienen.
+              <strong>Automatización e IA en tu sector</strong>
+              En casi todos los rubros, las tareas más repetitivas ya se están automatizando. Los trabajos que van a sobrevivir son los que requieren juicio humano, creatividad y relaciones. Eso no significa que la tecnología sea una amenaza: significa que hay que saber usarla antes de que otros lo hagan por vos.
             </div>
+            <p>En esta sesión vas a mapear las herramientas digitales de <span class="rubro-tag" data-rubro="true">tu rubro</span>, autoevaluar cuánto sabés de cada una y definir tus prioridades de aprendizaje.</p>
           </div>
         </div>
         <div class="seccion">
-          <div class="seccion-titulo">Tu actividad — Mapa de herramientas digitales</div>
+          <div class="seccion-titulo">Tu actividad — Mapa tecnológico de tu rubro</div>
           <div class="actividad">
-            <div class="info-box"><strong>📝 Instrucción:</strong> Para cada herramienta, marcá tu nivel real. Después respondé las preguntas de reflexión.</div>
-            <table class="tabla-comparativa">
-              <thead><tr><th>Herramienta</th><th>Ya la uso bien</th><th>La conozco pero poco</th><th>No la conocía</th></tr></thead>
-              <tbody id="s8-tabla"></tbody>
-            </table>
-            <label class="campo-label" style="margin-top:12px">¿Cuáles de estas herramientas te parece más urgente aprender antes de buscar trabajo? ¿Por qué?</label>
-            <textarea class="campo" id="s8-urgentes" placeholder="Tus 2-3 prioridades y el motivo..."></textarea>
-            <label class="campo-label">¿Cómo conecta lo que aprendés en Lógica y Programación con el trabajo contable? ¿Lo habías pensado antes?</label>
-            <textarea class="campo" id="s8-conexion" placeholder="Tu reflexión..."></textarea>
+            <div class="info-box"><strong>📝 Instrucción:</strong> Esta actividad es sobre <strong class="rubro-tag" data-rubro="true">tu rubro</strong>. Investigá si no sabés — eso es parte del ejercicio.</div>
+            <label class="campo-label">¿Qué herramientas digitales, software o tecnologías se usan en <span class="rubro-tag" data-rubro="true">tu rubro</span>? Listá al menos 5, aunque no las conozcas todavía. Investigá si hace falta.</label>
+            <textarea class="campo" id="s8-herramientas" placeholder="Herramienta 1, para qué sirve... / Herramienta 2..."></textarea>
+            <label class="campo-label">De esa lista, ¿cuáles ya sabés usar? ¿Cuáles conocés pero no dominás? ¿Cuáles no sabías que existían?</label>
+            <textarea class="campo" id="s8-niveles" placeholder="Ya uso bien: ... / Conozco pero poco: ... / No conocía: ..."></textarea>
+            <label class="campo-label">¿Cómo está cambiando la IA o la automatización <span class="rubro-tag" data-rubro="true">tu rubro</span>? ¿Hay trabajos que ya no existen o que cambiaron mucho en los últimos años? ¿Y trabajos nuevos que aparecieron?</label>
+            <textarea class="campo" id="s8-ia" placeholder="Lo que encontraste o lo que sabés..."></textarea>
+            <label class="campo-label">¿Cuáles son las 2-3 herramientas o habilidades tecnológicas más urgentes para aprender en <span class="rubro-tag" data-rubro="true">tu rubro</span>? ¿Por qué esas?</label>
+            <textarea class="campo" id="s8-urgentes" placeholder="Tus prioridades y el motivo..."></textarea>
+            <label class="campo-label">¿Dónde aprenderías esas habilidades? (Cursos online, YouTube, practicando, en una institución, etc.) Sé específico/a.</label>
+            <textarea class="campo" id="s8-conexion" placeholder="Tu plan concreto de aprendizaje..."></textarea>
           </div>
         </div>
       </div>
-      <div class="clase-footer">
+<div class="clase-footer">
         <button class="btn-descargar" onclick="descargarSesion(8)">⬇ Descargar esta sesión</button>
         <button class="btn-completar" onclick="marcarCompletada(8)">Marcar como completada ✓</button>
       </div>
@@ -722,7 +854,7 @@
         <div class="seccion">
           <div class="seccion-titulo">Tu actividad — Análisis de conflicto laboral</div>
           <div class="actividad">
-            <div class="caso-box"><strong>Caso:</strong> Diego y Lucía trabajan juntos en un estudio contable en el mismo proyecto. Lucía cree que Diego hace todo a último momento y genera errores que ella tiene que corregir. Diego cree que Lucía es demasiado exigente y nunca está conforme con nada. El lunes tienen que entregar un informe al cliente y ninguno de los dos se habla.</div>
+            <div class="caso-box"><strong>Caso:</strong> Diego y Lucía trabajan juntos en el mismo sector y proyecto. Lucía cree que Diego hace todo a último momento y genera errores que ella tiene que corregir. Diego cree que Lucía es demasiado exigente y nunca está conforme con nada. El lunes tienen que entregar un informe al cliente y ninguno de los dos se habla.</div>
             <label class="campo-label">¿Qué está pasando realmente en este equipo? ¿Cuál creés que es el problema de fondo?</label>
             <textarea class="campo" id="s9-analisis" placeholder="Tu análisis — más allá de quién tiene razón..."></textarea>
             <label class="campo-label">¿Qué estilo de comunicación está usando cada uno? ¿Agresivo, pasivo o asertivo?</label>
@@ -749,43 +881,74 @@
           <div class="clase-producto">📦 Entregable: Presupuesto mensual simulado</div>
         </div>
       </div>
-      <div class="clase-body">
+            <div class="clase-body">
         <div class="seccion">
           <div class="seccion-titulo">Para leer antes de la actividad</div>
           <div class="intro-tema">
-            <h3>El primer sueldo: por qué casi siempre desaparece antes de fin de mes</h3>
-            <p>Recibir el primer sueldo es una de las sensaciones más buenas que existen. Y también es el momento en que muchas personas cometen los errores financieros más costosos: gastan todo, no ahorran nada y se endeudan con cuotas que después no pueden pagar.</p>
-            <p><strong>Lo primero que tenés que entender es la diferencia entre sueldo bruto y sueldo neto.</strong> El sueldo bruto es lo que te prometieron. El sueldo neto es lo que efectivamente te depositan, después de los descuentos obligatorios: jubilación (11%), obra social (3%), y en algunos casos impuesto a las ganancias. En la práctica, podés recibir entre un 15% y un 30% menos de lo que figura en el contrato.</p>
+            <h3>Finanzas personales — el dinero en tu trayectoria</h3>
+            <p>El dinero funciona distinto según tu camino. En relación de dependencia tenés un sueldo fijo, descuentos previsibles y cierta estabilidad. En un emprendimiento, los ingresos son variables: algunos meses más, otros menos, y además tenés que pagar tus propios costos antes de quedarte con algo.</p>
             <div class="concepto-box">
-              <strong>Gastos fijos vs. gastos variables</strong>
-              <strong>Fijos:</strong> los que pagás todos los meses sin importar lo que hagas (alquiler, transporte, servicios). <strong>Variables:</strong> los que cambian según tus decisiones (salidas, ropa, entretenimiento). Para administrar bien, primero cubrís los fijos, después los variables.
+              <strong>Sueldo bruto vs. neto (para empleados)</strong>
+              El sueldo bruto es lo que te prometieron. El neto es lo que te depositan, después de descuentos obligatorios: jubilación (11%), obra social (3%), y en algunos casos impuesto a las ganancias. Podés recibir entre un 15% y 30% menos de lo que figura en el contrato.
             </div>
-            <p><strong>El error más común:</strong> ahorrar "lo que sobra". Casi nunca sobra nada. El ahorro que funciona es el que se separa <em>antes</em> de gastar: apenas te depositan, transferís un porcentaje fijo a una cuenta separada. Aunque sea el 5% o el 10%, lo que importa es el hábito.</p>
+            <div class="concepto-box">
+              <strong>Ingreso vs. ganancia (para emprendedores)</strong>
+              El ingreso es lo que entra. La ganancia es lo que queda después de pagar costos: materiales, alquiler si tenés local, herramientas, publicidad, monotributo. Muchos emprendedores confunden ingreso con ganancia y terminan trabajando mucho para ganar poco.
+            </div>
+            <p>Esta sesión está adaptada a tu trayectoria. El ejercicio de presupuesto parte desde tu realidad concreta.</p>
           </div>
         </div>
         <div class="seccion">
-          <div class="seccion-titulo">Tu actividad — Presupuesto mensual simulado</div>
+          <div class="seccion-titulo">Tu actividad — Presupuesto según tu trayectoria</div>
           <div class="actividad">
-            <div class="info-box"><strong>📝 Instrucción:</strong> Tu sueldo neto simulado es <strong>$480.000</strong>. Distribuilo entre los gastos de la tabla. Si no te alcanza, indicá qué recortarías. Intentá separar algo para ahorro.</div>
-            <table class="tabla-comparativa">
-              <thead><tr><th>Gasto</th><th>Monto que asignarías ($)</th></tr></thead>
-              <tbody>
-                <tr><td>🏠 Alquiler / aporte a la familia</td><td><textarea id="s10-alquiler" style="min-height:40px" placeholder="$"></textarea></td></tr>
-                <tr><td>🚌 Transporte</td><td><textarea id="s10-transporte" style="min-height:40px" placeholder="$"></textarea></td></tr>
-                <tr><td>🍽️ Comida (mercado y día a día)</td><td><textarea id="s10-comida" style="min-height:40px" placeholder="$"></textarea></td></tr>
-                <tr><td>📱 Servicios (celular, internet)</td><td><textarea id="s10-servicios" style="min-height:40px" placeholder="$"></textarea></td></tr>
-                <tr><td>👕 Ropa / higiene personal</td><td><textarea id="s10-ropa" style="min-height:40px" placeholder="$"></textarea></td></tr>
-                <tr><td>🎮 Ocio y salidas</td><td><textarea id="s10-ocio" style="min-height:40px" placeholder="$"></textarea></td></tr>
-                <tr><td>💰 Ahorro (separalo primero)</td><td><textarea id="s10-ahorro" style="min-height:40px" placeholder="$"></textarea></td></tr>
-                <tr><td>📦 Otros gastos</td><td><textarea id="s10-otros" style="min-height:40px" placeholder="$"></textarea></td></tr>
-              </tbody>
-            </table>
-            <label class="campo-label" style="margin-top:12px">¿Te alcanzó el sueldo? ¿Qué tuviste que recortar? ¿Pudiste separar algo para ahorro? ¿Qué te sorprendió del ejercicio?</label>
-            <textarea class="campo" id="s10-reflexion" placeholder="Contá cómo te fue con el presupuesto..."></textarea>
+
+            <!-- VERSIÓN EMPLEO -->
+            <div id="s10-version-empleo">
+              <div class="info-box"><strong>📝 Tu trayectoria es <span class="tray-tag" data-tray="true">tu camino</span>.</strong> Tu sueldo neto simulado es <strong>$480.000</strong>. Distribuilo entre los gastos.</div>
+              <table class="tabla-comparativa">
+                <thead><tr><th>Gasto</th><th>Monto que asignarías ($)</th></tr></thead>
+                <tbody>
+                  <tr><td>🏠 Alquiler / aporte a la familia</td><td><textarea id="s10-alquiler" style="min-height:40px" placeholder="$"></textarea></td></tr>
+                  <tr><td>🚌 Transporte</td><td><textarea id="s10-transporte" style="min-height:40px" placeholder="$"></textarea></td></tr>
+                  <tr><td>🍽️ Comida</td><td><textarea id="s10-comida" style="min-height:40px" placeholder="$"></textarea></td></tr>
+                  <tr><td>📱 Servicios (celular, internet)</td><td><textarea id="s10-servicios" style="min-height:40px" placeholder="$"></textarea></td></tr>
+                  <tr><td>👕 Ropa / higiene personal</td><td><textarea id="s10-ropa" style="min-height:40px" placeholder="$"></textarea></td></tr>
+                  <tr><td>🎮 Ocio y salidas</td><td><textarea id="s10-ocio" style="min-height:40px" placeholder="$"></textarea></td></tr>
+                  <tr><td>💰 Ahorro (separalo primero)</td><td><textarea id="s10-ahorro" style="min-height:40px" placeholder="$"></textarea></td></tr>
+                  <tr><td>📦 Otros</td><td><textarea id="s10-otros" style="min-height:40px" placeholder="$"></textarea></td></tr>
+                </tbody>
+              </table>
+              <label class="campo-label" style="margin-top:12px">¿Te alcanzó? ¿Qué tuviste que recortar? ¿Pudiste separar ahorro?</label>
+              <textarea class="campo" id="s10-reflexion" placeholder="Tu reflexión..."></textarea>
+            </div>
+
+            <!-- VERSIÓN EMPRENDIMIENTO -->
+            <div id="s10-version-emprender" style="display:none">
+              <div class="info-box"><strong>📝 Tu trayectoria es <span class="tray-tag" data-tray="true">tu camino</span>.</strong> Trabajás con ingresos variables. Simulá un mes en <span class="rubro-tag" data-rubro="true">tu rubro</span>.</div>
+              <table class="tabla-comparativa">
+                <thead><tr><th>Concepto</th><th>Monto estimado ($)</th></tr></thead>
+                <tbody>
+                  <tr><td>💵 Ingresos del mes (lo que entraria por tus servicios/ventas)</td><td><textarea id="s10e-ingresos" style="min-height:40px" placeholder="$"></textarea></td></tr>
+                  <tr><td>🧴 Materiales / insumos</td><td><textarea id="s10e-materiales" style="min-height:40px" placeholder="$"></textarea></td></tr>
+                  <tr><td>🏠 Alquiler de local / espacio (si aplica)</td><td><textarea id="s10e-alquiler" style="min-height:40px" placeholder="$ o 0 si trabajás en casa"></textarea></td></tr>
+                  <tr><td>📱 Servicios y herramientas</td><td><textarea id="s10e-servicios" style="min-height:40px" placeholder="$"></textarea></td></tr>
+                  <tr><td>📣 Publicidad (Instagram Ads, impresiones, etc.)</td><td><textarea id="s10e-publicidad" style="min-height:40px" placeholder="$"></textarea></td></tr>
+                  <tr><td>🧾 Monotributo</td><td><textarea id="s10e-mono" style="min-height:40px" placeholder="$"></textarea></td></tr>
+                  <tr><td>📦 Otros costos del negocio</td><td><textarea id="s10e-otros-neg" style="min-height:40px" placeholder="$"></textarea></td></tr>
+                </tbody>
+              </table>
+              <label class="campo-label" style="margin-top:10px">¿Cuánto te quedaría de ganancia después de restar todos los costos? ¿Alcanza para vivir?</label>
+              <textarea class="campo" id="s10e-ganancia" placeholder="Ingresos - costos = ..."></textarea>
+              <label class="campo-label">¿Qué pasaría si un mes tenés un 40% menos de clientes? ¿Cómo lo cubrirías? ¿Qué reserva necesitarías tener siempre?</label>
+              <textarea class="campo" id="s10e-riesgo" placeholder="Tu análisis..."></textarea>
+              <label class="campo-label">¿Cuántos clientes o ventas necesitás por mes para que el negocio sea sustentable? Calculalo.</label>
+              <textarea class="campo" id="s10e-sustentable" placeholder="Necesito X clientes que paguen Y = ..."></textarea>
+            </div>
+
           </div>
         </div>
       </div>
-      <div class="clase-footer">
+<div class="clase-footer">
         <button class="btn-descargar" onclick="descargarSesion(10)">⬇ Descargar esta sesión</button>
         <button class="btn-completar" onclick="marcarCompletada(10)">Marcar como completada ✓</button>
       </div>
@@ -797,64 +960,44 @@
         <div class="clase-num">11</div>
         <div class="clase-meta">
           <span class="clase-bloque-tag" style="background:var(--b5)">Ética e integración</span>
-          <div class="clase-titulo">Ética e integridad en el trabajo contable</div>
-          <div class="clase-desc">En contabilidad, firmás con tu nombre. Eso tiene consecuencias legales y profesionales reales.</div>
+          <div class="clase-titulo">Ética e integridad en tu rubro</div>
+          <div class="clase-desc">En cualquier trabajo, tus decisiones tienen nombre. Eso tiene consecuencias reales.</div>
           <div class="clase-producto">📦 Entregable: Dilema ético resuelto</div>
         </div>
       </div>
-      <div class="clase-body">
+            <div class="clase-body">
         <div class="seccion">
           <div class="seccion-titulo">Para leer antes de la actividad</div>
           <div class="intro-tema">
-            <h3>¿Por qué la ética importa especialmente en contabilidad?</h3>
-            <p>En muchas profesiones, un error ético tiene consecuencias para vos. En contabilidad, puede tenerlas también para terceros: clientes, empleados, el Estado, proveedores. Un contador o una contadora que firma documentos falsos no solo pierde el trabajo: puede ser inhabilitado para ejercer la profesión e incluso tener consecuencias penales.</p>
+            <h3>Ética e integridad en <span class="rubro-tag" data-rubro="true">tu rubro</span></h3>
+            <p>Todos los rubros tienen dilemas éticos. No es algo exclusivo de la contabilidad o el derecho: pasa en tecnología (¿qué hacés con los datos de usuarios?), en salud (¿qué le decís a un paciente?), en comunicación (¿publicás algo que sabés que es falso?), en mecánica (¿le cobrás una reparación que no hiciste?).</p>
             <p>Es importante distinguir tres cosas que a veces se confunden:</p>
             <div class="concepto-box">
               <strong>Legal vs. Ético vs. Conveniente</strong>
-              <strong>Legal:</strong> lo que la ley permite. <strong>Ético:</strong> lo que está bien hacer, aunque la ley no lo obligue. <strong>Conveniente:</strong> lo que te beneficia en el corto plazo. Las tres pueden coincidir o no: algo puede ser legal pero no ético, o ético pero inconveniente.
+              <strong>Legal:</strong> lo que la ley permite. <strong>Ético:</strong> lo que está bien hacer, aunque la ley no lo obligue. <strong>Conveniente:</strong> lo que te beneficia en el corto plazo. Las tres pueden coincidir o no. En <span class="rubro-tag" data-rubro="true">tu rubro</span> vas a enfrentar situaciones donde las tres van en direcciones distintas.
             </div>
-            <p><strong>La presión institucional</strong> es real. En muchos casos, no vas a ser vos quien propone algo cuestionable — va a ser tu jefe, tu client    <!-- ══ SESIÓN 11 ══ -->
-    <div class="clase-card" id="clase-11">
-      <div class="clase-header">
-        <div class="clase-num">11</div>
-        <div class="clase-meta">
-          <span class="clase-bloque-tag" style="background:var(--b5)">Ética e integración</span>
-          <div class="clase-titulo">Ética e integridad en el trabajo contable</div>
-          <div class="clase-desc">En contabilidad, firmás con tu nombre. Eso tiene consecuencias legales y profesionales reales.</div>
-          <div class="clase-producto">📦 Entregable: Dilema ético resuelto</div>
-        </div>
-      </div>
-      <div class="clase-body">
-        <div class="seccion">
-          <div class="seccion-titulo">Para leer antes de la actividad</div>
-          <div class="intro-tema">
-            <h3>¿Por qué la ética importa especialmente en contabilidad?</h3>
-            <p>En muchas profesiones, un error ético tiene consecuencias para vos. En contabilidad, puede tenerlas también para terceros: clientes, empleados, el Estado, proveedores. Un contador o contadora que firma documentos falsos no solo pierde el trabajo: puede ser inhabilitado para ejercer la profesión e incluso tener consecuencias penales.</p>
-            <p>Es importante distinguir tres cosas que a veces se confunden:</p>
-            <div class="concepto-box">
-              <strong>Legal vs. Ético vs. Conveniente</strong>
-              <strong>Legal:</strong> lo que la ley permite. <strong>Ético:</strong> lo que está bien hacer, aunque la ley no lo obligue. <strong>Conveniente:</strong> lo que te beneficia a corto plazo. Las tres pueden coincidir o no.
-            </div>
-            <p><strong>La presión institucional</strong> es real. En muchos casos no vas a ser vos quien propone algo cuestionable — va a ser tu jefe, tu cliente o la empresa. La pregunta es: ¿qué hacés cuando alguien con más poder te pide algo que no está bien?</p>
-            <p>No hay una respuesta fácil. Pero algo es claro: <strong>la reputación profesional se tarda años en construir y minutos en destruir</strong>. En el mundo contable, donde la confianza es la base de todo, eso vale especialmente.</p>
+            <p><strong>La presión institucional</strong> es real en todos los sectores. En muchos casos, no vas a ser vos quien propone algo cuestionable — va a ser tu jefe, tu cliente o la organización donde trabajás. La pregunta es: ¿qué hacés cuando alguien con más poder que vos te pide algo que no está bien?</p>
+            <p>La reputación profesional se tarda años en construir y minutos en destruir. Eso vale en cualquier rubro.</p>
           </div>
         </div>
         <div class="seccion">
-          <div class="seccion-titulo">Tu actividad — Dilema ético</div>
+          <div class="seccion-titulo">Tu actividad — Dilema ético en tu rubro</div>
           <div class="actividad">
-            <div class="caso-box"><strong>Situación:</strong> Trabajas hace 6 meses en un estudio contable. Tu jefe te dice que la empresa cliente "necesita que los números cierren" y te pide que registres gastos mayores a los reales para reducir impuestos. Te explica que "todos lo hacen" y que si no podés hacerlo, "no sos el perfil que buscan". Necesítas el trabajo.</div>
-            <label class="campo-label">¿Qué harías? Describí tu decisión con detalle.</label>
-            <textarea class="campo" id="s11-decision" placeholder="Tu decisión y el razonamiento detrás..."></textarea>
-            <label class="campo-label">¿Cuáles serían las consecuencias legales y profesionales de acceder? ¿Y de negarte?</label>
+            <div class="info-box"><strong>📝 Instrucción:</strong> Vas a construir y analizar un dilema ético propio de <strong class="rubro-tag" data-rubro="true">tu rubro</strong>.</div>
+            <label class="campo-label">Describí una situación donde alguien en <span class="rubro-tag" data-rubro="true">tu rubro</span> podría enfrentar un dilema ético real. Puede ser algo que viste, que escuchaste, o que imaginás que podría pasar. Tiene que ser específico del sector.</label>
+            <textarea class="campo" id="s11-dilema" placeholder="Situación: ..."></textarea>
+            <label class="campo-label">En esa situación, ¿qué sería lo legal, lo ético y lo conveniente? ¿Coinciden o van en direcciones distintas?</label>
+            <textarea class="campo" id="s11-reflexion" placeholder="Lo legal: ... / Lo ético: ... / Lo conveniente: ..."></textarea>
+            <label class="campo-label">¿Qué harías vos si estuvieras en esa situación? Describí tu decisión con detalle y el razonamiento detrás.</label>
+            <textarea class="campo" id="s11-decision" placeholder="Tu decisión y por qué..."></textarea>
+            <label class="campo-label">¿Cuáles serían las consecuencias de cada opción — acceder a lo cuestionable vs. negarte? ¿Qué perderías en cada caso?</label>
             <textarea class="campo" id="s11-consecuencias" placeholder="Consecuencias de acceder: ... / Consecuencias de negarte: ..."></textarea>
-            <label class="campo-label">Si decíis negarte, ¿cómo se lo comunicarías a tu jefe de forma profesional?</label>
+            <label class="campo-label">Si decidís negarte, ¿cómo lo comunicarías profesionalmente sin destruir la relación laboral (aunque sepas que quizás no se puede evitar)?</label>
             <textarea class="campo" id="s11-comunicacion" placeholder="¿Cómo lo dirías concretamente?"></textarea>
-            <label class="campo-label">En este caso, ¿qué es lo legal, qué es lo ético y qué es lo conveniente? ¿Coinciden?</label>
-            <textarea class="campo" id="s11-reflexion" placeholder="Tu análisis..."></textarea>
           </div>
         </div>
       </div>
-      <div class="clase-footer">
+<div class="clase-footer">
         <button class="btn-descargar" onclick="descargarSesion(11)">⬇ Descargar esta sesión</button>
         <button class="btn-completar" onclick="marcarCompletada(11)">Marcar como completada ✓</button>
       </div>
@@ -867,7 +1010,7 @@
         <div class="clase-meta">
           <span class="clase-bloque-tag" style="background:var(--b5)">Ética e integración</span>
           <div class="clase-titulo">Simulacro de proceso de selección completo</div>
-          <div class="clase-desc">Cierre del año: todo lo que aprendiste, en acción. Ya sabés más de lo que creés.</div>
+          <div class="clase-desc">Cierre del año: todo lo que aprendiste aplicado a <span class="rubro-tag" data-rubro="true">tu rubro</span>, en acción. Ya sabés más de lo que creés.</div>
           <div class="clase-producto">📦 Entregable: Presentación personal + carta de cierre</div>
         </div>
       </div>
@@ -886,8 +1029,8 @@
         <div class="seccion">
           <div class="seccion-titulo">Tu actividad — Simulacro y cierre</div>
           <div class="actividad">
-            <label class="campo-label">Esquema de tu presentación personal de 2 minutos</label>
-            <textarea class="campo" id="s12-esquema" placeholder="Punto 1: quién soy / Punto 2: qué sé hacer / Punto 3: por qué me interesa el área contable..."></textarea>
+            <label class="campo-label">Esquema de tu presentación de 2 minutos — adaptada a tu trayectoria (<span class="tray-tag" data-tray="true">tu camino</span>): si buscás empleo, es una presentación ante un empleador. Si emprendés, es un pitch ante un potencial cliente en <span class="rubro-tag" data-rubro="true">tu rubro</span>.</label>
+            <textarea class="campo" id="s12-esquema" placeholder="Punto 1: quién soy / Punto 2: qué sé hacer / Punto 3: por qué me interesa tu rubro..."></textarea>
             <label class="campo-label" style="margin-top:6px">Autoevaluación — marcá cómo te fue en cada criterio</label>
             <div class="feedback-grid">
               <div class="feedback-row" style="grid-template-columns:1fr 70px 70px 80px;font-size:11px;">
@@ -940,6 +1083,121 @@
 </div>
 
 <script>
+// ─────────────────────────────────
+//  RUBRO SYSTEM
+// ─────────────────────────────────
+function getRubro() {
+  return localStorage.getItem('tutoria5to-rubro') || '';
+}
+function guardarRubro() {
+  var input = document.getElementById('rubro-input-main');
+  var val = input ? input.value.trim() : '';
+  if (!val) { if (input) input.style.borderColor = '#e05'; return; }
+  localStorage.setItem('tutoria5to-rubro', val);
+  aplicarRubro(val);
+  mostrarRubroConfirmado(val);
+}
+function setRubroChip(el) {
+  var text = el.textContent.replace(/^[^\s]+\s/, '').trim();
+  var input = document.getElementById('rubro-input-main');
+  if (input) { input.value = text; }
+  guardarRubro();
+}
+function editarRubro() {
+  var conf = document.getElementById('rubro-confirmado');
+  var inputRow = document.querySelector('.rubro-input-row');
+  var chips = document.querySelector('.rubro-sugerencias');
+  if (conf) conf.style.display = 'none';
+  if (inputRow) inputRow.style.display = 'flex';
+  if (chips) chips.style.display = 'flex';
+}
+function mostrarRubroConfirmado(rubro) {
+  var conf = document.getElementById('rubro-confirmado');
+  var badge = document.getElementById('rubro-badge-text');
+  var inputRow = document.querySelector('.rubro-input-row');
+  var chips = document.querySelector('.rubro-sugerencias');
+  var barDisplay = document.getElementById('rubro-display-bar');
+  if (badge) badge.textContent = rubro;
+  if (conf) conf.style.display = 'block';
+  if (inputRow) inputRow.style.display = 'none';
+  if (chips) chips.style.display = 'none';
+  if (barDisplay) { barDisplay.textContent = '\u2726 ' + rubro; barDisplay.style.display = 'inline-flex'; }
+}
+function aplicarRubro(rubro) {
+  if (!rubro) return;
+  document.querySelectorAll('[data-rubro="true"]').forEach(function(el) {
+    el.textContent = rubro;
+  });
+}
+function getTrayectoria() {
+  return localStorage.getItem('tutoria5to-trayectoria') || '';
+}
+
+function elegirTrayectoria(valor, btn) {
+  // Deselect all
+  document.querySelectorAll('.tray-btn').forEach(function(b) { b.classList.remove('selected'); });
+  btn.classList.add('selected');
+  localStorage.setItem('tutoria5to-trayectoria', valor);
+  aplicarTrayectoria(valor);
+}
+
+function aplicarTrayectoria(valor) {
+  if (!valor) return;
+  var labels = {
+    'empleo': 'Buscar empleo',
+    'emprender': 'Emprender directo',
+    'ambos': 'Empleo → Emprendimiento'
+  };
+  var label = labels[valor] || valor;
+
+  // Update tray-tag spans
+  document.querySelectorAll('[data-tray="true"]').forEach(function(el) {
+    el.textContent = label;
+  });
+
+  // Update badge
+  var badge = document.getElementById('tray-badge-text');
+  if (badge) badge.textContent = label;
+
+  // Show/hide conditional sections (session 6 and 10)
+  var esEmpleo = (valor === 'empleo' || valor === 'ambos');
+  var esEmprender = (valor === 'emprender');
+
+  ['s6-version-empleo', 's10-version-empleo'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.style.display = esEmpleo ? 'block' : 'none';
+  });
+  ['s6-version-emprender', 's10-version-emprender'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.style.display = esEmprender ? 'block' : 'none';
+  });
+
+  // Show trayectoria selector after rubro is confirmed
+  var traySelector = document.getElementById('trayectoria-selector');
+  if (traySelector) traySelector.style.display = 'block';
+}
+
+function initRubro() {
+  var saved = getRubro();
+  if (saved) {
+    var input = document.getElementById('rubro-input-main');
+    if (input) input.value = saved;
+    aplicarRubro(saved);
+    mostrarRubroConfirmado(saved);
+  }
+  var savedTray = getTrayectoria();
+  if (savedTray) {
+    aplicarTrayectoria(savedTray);
+    // Re-select the correct tray button
+    var labels = {'empleo':'Buscar empleo','emprender':'Emprender directo','ambos':'Empleo → Emprendimiento'};
+    document.querySelectorAll('.tray-btn').forEach(function(btn) {
+      if (btn.textContent.indexOf(labels[savedTray] || savedTray) !== -1) {
+        btn.classList.add('selected');
+      }
+    });
+  }
+}
+
 const sesionesHome = [
   {num:1,  color:'var(--b1)', titulo:'Autoconocimiento laboral',         producto:'Mapa de fortalezas'},
   {num:2,  color:'var(--b1)', titulo:'Empleado, freelance, emprendedor', producto:'Cuadro comparativo'},
@@ -948,7 +1206,7 @@ const sesionesHome = [
   {num:5,  color:'var(--b2)', titulo:'CV y carta de presentación',       producto:'Borrador de CV'},
   {num:6,  color:'var(--b2)', titulo:'La entrevista de trabajo',          producto:'Respuestas + autoevaluación'},
   {num:7,  color:'var(--b3)', titulo:'Derechos laborales',               producto:'Análisis de caso'},
-  {num:8,  color:'var(--b3)', titulo:'Tecnología contable',              producto:'Mapa de herramientas'},
+  {num:8,  color:'var(--b3)', titulo:'Tecnología en tu rubro',              producto:'Mapa de herramientas'},
   {num:9,  color:'var(--b4)', titulo:'Equipos y conflictos',              producto:'Análisis de conflicto'},
   {num:10, color:'var(--b4)', titulo:'El primer sueldo',                  producto:'Presupuesto simulado'},
   {num:11, color:'var(--b5)', titulo:'Ética profesional',               producto:'Dilema ético'},
@@ -964,7 +1222,7 @@ const titulos = {
   1:'Sesión 1 — Autoconocimiento laboral',2:'Sesión 2 — Formas de trabajo',3:'Sesión 3 — Primer día',
   4:'Sesión 4 — Comunicación profesional',5:'Sesión 5 — CV y carta de presentación',
   6:'Sesión 6 — La entrevista de trabajo',7:'Sesión 7 — Derechos laborales',
-  8:'Sesión 8 — Tecnología contable',9:'Sesión 9 — Equipos y conflictos',
+  8:'Sesión 8 — Tecnología en tu rubro',9:'Sesión 9 — Equipos y conflictos',
   10:'Sesión 10 — El primer sueldo',11:'Sesión 11 — Ética profesional',12:'Sesión 12 — Simulacro de selección',
 };
 const etiquetas = {
